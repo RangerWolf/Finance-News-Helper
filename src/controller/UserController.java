@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.List;
+import java.util.Map;
 
 import model.Keyword;
 import model.News;
@@ -9,12 +10,17 @@ import model.User;
 import notifier.EmailNotifier;
 import notifier.Notifier;
 import utils.Constants;
+import utils.MiscUtils;
 import validator.AdminActionValidator;
 import validator.LoginStatusValidator;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.gson.Gson;
 import com.jfinal.aop.Before;
 
+import crawler.Crawler;
+import crawler.impl.GoogNewsCrawler;
 import dao.KeywordDAO;
 import dao.NewsDAO;
 import dao.UserDAO;
@@ -52,12 +58,36 @@ public class UserController extends JsonController {
 		// 同步的将keyword保存到数据库之中
 		String[] words = keywordVal.trim().split(",");
 		List<Keyword> wordList = Lists.newArrayList();
+		List<String> allWords = kDao.query();
+		List<String> newWords = Lists.newArrayList();
+		
 		for(String word : words) {
 			Keyword kw = new Keyword(word);
 			wordList.add(kw);
+			
+			if(!allWords.contains(word)) {
+				newWords.add(word);
+			}
 		}
 		kDao.save(wordList);
 		
+		// query news for new words
+		newWords = MiscUtils.mergeKeywordList(newWords);
+		Crawler crawler = new GoogNewsCrawler();
+		Map<String, Boolean> map = Maps.newHashMap();
+		for(String word : newWords) {
+			String url = crawler.buildURL(word);
+			List<News> list = crawler.parse(url);
+			if(list.size() > 0) {
+				map.put(word, crawler.save(list));
+			} else {
+				map.put(word, false);
+			}
+		}
+		if(newWords.size() > 0) {
+			System.out.println("Crawl news for new words:");
+			System.out.println(new Gson().toJson(map));
+		}
 		RestfulResponse rr = new RestfulResponse();
 		rr.setRet(true);
 		rr.setDesc("done");
