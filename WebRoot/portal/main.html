@@ -387,13 +387,18 @@
 	}
 	$("#addKeywordBtn").click(function(){
 		var curWord = $("#newKeywordTxt").val();
-		if(curWord != null && curWord != undefined && curWord.length > 0 && /^[a-zA-z0-9\u4E00-\u9FA5]*$/.test(curWord)) {
+		var totalText = $("#userkeywords").val();
+		if(totalText.indexOf(curWord + ",") != -1) {
+			alert("重复的关键字");
+			$("#newKeywordTxt").val("");
+		}
+		else if(curWord != null && curWord != undefined && curWord.length > 0 && /^[a-zA-z0-9\u4E00-\u9FA5]*$/.test(curWord)) {
 			if(curWord.length < 2) {
 				alert("关键字的长度不能少于2")
 			} 
 			else {
 				addKeywordInUI(curWord);
-				var totalText = $("#userkeywords").val();
+				
 				$("#userkeywords").val(totalText + curWord + ",");
 				$("#newKeywordTxt").val("");
 				updateUserSetting();				
