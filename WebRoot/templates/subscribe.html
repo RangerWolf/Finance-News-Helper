@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>订阅关键字</title>
+</head>
+<body>
+<form action="${base}/user/update" method="POST">
+    订阅的关键字（多个关键字使用逗号(,)分隔）：
+    <span style="color: red">${keywordErr!''}</span><br>
+    <input type="text" name="keyword" value="${keyword!''}"><br>
+     
+    订阅的邮箱：<span style="color: red">${emailErr!''}</span><br> 
+    <input type="text" name="email" value="${email!''}"><br> 
+    
+    <input type="submit" value="OK">
+</form>
+</body>
+</html>

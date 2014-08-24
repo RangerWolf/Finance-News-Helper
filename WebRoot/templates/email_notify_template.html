@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新闻列表</title>
+
+<style type="text/css">
+.header {
+    background-color:rgb(3,115,214);color:white;font-size: 24px; font-weight:bold;height:50px;line-height:50px;border-radius:5px 5px 0 0; padding:5px
+}
+
+.table {
+    display: table; vertical-align: middle;padding-top:5px;background-color:white;padding-left: 5px; font-family: 'Segoe UI',微软雅黑;
+    border: 1px solid rgb(225,225,225)
+}
+
+.table-row {
+    display: table-row;
+}
+
+
+.table-cell {
+    display: table-cell;  padding-top:15px
+}
+
+.news-title {
+    font-size: 16px;font-weight:bold
+}
+
+.news-desc {
+    font-size: 14px;margin-top:3px
+}
+
+.news-footer {
+    font-size: 12px;margin-top:3px
+}
+
+.update-time {
+    color:rgb(0,128,0)
+}
+
+.pub-source {
+    color:grey
+}
+
+</style>
+
+
+
+</head>
+<body style="background-color:rgb(247,249,250)">
+
+<div style="width:600px; margin-left:auto;margin-right:auto;">
+	<!-- header -->
+	<div class="header">
+	   <span>股事先知</span>
+	</div>
+	
+	<!-- content -->
+	<div class="table">
+	
+	   <!-- [TEMPLATE-START] -->
+	   <div class="table-row">
+	        <div class="table-cell">
+	           <!-- title -->
+	           <div class="news-title" >
+	               <a href="${LINK}">
+	                   ${TITLE}
+	               </a>
+	           </div>
+	           
+	           <!-- description -->
+	           <div class="news-desc" >
+	               ${DESC}
+	           </div>
+	           
+	           <!-- update time + from -->
+	           <div class="news-footer">
+	               <span class="update-time">${UPDATE_TIME}</span> 
+	               <span class="pub-source">${FROM}</span>
+	           </div>
+	        </div>
+	    </div>
+	    <!-- [TEMPLATE-END] -->
+	</div>
+</div>
+
+
+
+</body>
+</html>

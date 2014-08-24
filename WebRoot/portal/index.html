@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="../../favicon.ico">
+
+<title>股事先知 </title>
+
+<!-- Bootstrap core CSS -->
+<link href="${base}/portal/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="${base}/portal/css/index.css" rel="stylesheet">
+
+<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<script src="${base}/portal/js/ie-emulation-modes-warning.js"></script>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="${base}/portal/js/ie10-viewport-bug-workaround.js"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+	<div class="site-wrapper">
+
+		<div class="site-wrapper-inner">
+
+			<div class="cover-container">
+
+				<div class="masthead clearfix">
+					<div class="inner">
+						<h3 class="masthead-brand">股事先知</h3>
+						<ul class="nav masthead-nav">
+							<li class="active"><a href="${base}/login">登录</a></li>
+							<li><a href="${base}/regpage">注册</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="inner cover">
+					<h1 class="cover-heading">什么是股事先知？</h1>
+					<p class="lead">
+					   股事先知是一个自动化的股市咨询提醒工具，您可以在网站上定制您关心的新闻，我们会把经过分析并且认为有价值的信息在第一时间推送给您！
+                    </p>
+					   <div class="text-center">
+                           <form class="form-inline" role="form" method="POST" action="${base}/register">
+                           	<input type="hidden" name="from" value="index" />
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">@</div>
+                                  <input class="form-control" type="email" placeholder="输入邮件地址" name="email" value="${email!''}">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="sr-only" for="exampleInputPassword2">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword2" placeholder="密码" name="password">
+                              </div>
+                              <button type="submit" class="btn btn-success">创建账户</button>
+                              <a href="${base}/login">已有账户？ 直接登录</a>
+                            </form>
+                            <div style='color: red; margin-top:15px'>
+                                 ${errMsg!''}
+                            </div>
+					   </div>
+				</div>
+
+				<div class="mastfoot">
+					<div class="inner">
+						<p>
+							Cover template for <a href="http://getbootstrap.com">Bootstrap</a>,
+							by <a href="https://twitter.com/mdo">@mdo</a>.
+						</p>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="${base}/portal/js/jquery-1.11.0.js"></script>
+	<script src="${base}/portal/js/bootstrap.min.js"></script>
+</body>
+</html>

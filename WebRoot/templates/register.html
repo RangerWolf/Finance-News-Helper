@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户注册</title>
+</head>
+<body>
+<h2>用户信息注册</h2>
+<hr>
+<form action="${base}/user/register" method="POST">
+    用户名：
+    <span style="color: red">${nameErr!''}</span><br>
+    <input type="text" name="user.username" value=""><br>
+     
+    密码：<span style="color: red">${emailErr!''}</span><br> 
+    <input type="password" name="user.password" value="${email!''}"><br> 
+    
+    <input type="submit" value="OK">
+</form>
+</body>
+</html>

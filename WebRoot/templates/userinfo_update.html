@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>信息更新成功</title>
+
+</head>
+<body>
+<input type="text" style="display: none"  value="${base!''}" id="baseUrl"/>
+${msg!''}  <br><br>
+
+<div style="display: table">
+    <div style="display: row">
+        <div style="display: table-cell;">
+			<div>
+				<input type="text" id="email" name="email" value="${email!''}" style="display:none">
+				您当前订阅使用的邮箱：<br>
+				${email!''} <br>
+				<input type="button" value="发一封邮件到我的邮箱试试~" id="sendNotify">
+			</div>
+			<div>
+			 <span id="status"></span>
+			</div>
+        </div>
+        <div style="display: table-cell; padding-left: 10px;"></div>
+        <div style="display: table-cell; border: 1px solid grey">
+            <div>最新资讯</div>
+            <table>
+                <#list newsList as news>
+					<tr>
+						<td>${news.title}</td>
+					</tr>
+				</#list>
+            </table>
+        </div>
+    </div>
+
+</div>
+            
+<script type="text/javascript" src="${base}/js/jquery-2.1.0.min.js"></script> 
+<script type="text/javascript" src="${base}/js/main.js"></script>
+</body>
+</html>
