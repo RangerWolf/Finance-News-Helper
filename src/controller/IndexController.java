@@ -12,7 +12,7 @@ import validator.RegisterActionValidator;
 import com.jfinal.aop.Before;
 
 import dao.UserDAO;
-import dao.impl.MongoUserDAO;
+import dao.mongodb.MongoUserDAO;
 
 public class IndexController extends JsonController {
 	UserDAO uDao = new MongoUserDAO();

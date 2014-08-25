@@ -16,10 +16,10 @@ import crawler.Crawler;
 import crawler.impl.BaiduNewsCrawler;
 import crawler.impl.GoogNewsCrawler;
 import dao.NewsDAO;
-import dao.impl.MongoNewsDAO;
+import dao.mongodb.MongoNewsDAO;
 
 public class NewsController extends JsonController{
-	private static NewsDAO dao = new MongoNewsDAO();
+	private NewsDAO dao = new MongoNewsDAO();
 	public void index() {
 		renderGson(dao.query());
 	}

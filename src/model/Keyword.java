@@ -3,6 +3,8 @@ package model;
 public class Keyword {
 
 	private String word;
+	public Keyword(){}
+	
 	public Keyword(String word) {
 		this.word = word;
 	}

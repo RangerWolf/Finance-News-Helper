@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 
 import model.User;
 import dao.UserDAO;
-import dao.impl.MongoUserDAO;
+import dao.mongodb.MongoUserDAO;
 
 public class JsonFormatUtils {
 	

@@ -20,4 +20,7 @@ public class Constants {
 	public static final String ATTR_LOGIN_EMAIL = "login_email";
 	public static final String ATTR_USER_STOCK = "stock";
 	public static final String ATTR_USER_KEYWORD = "keyword";
+	
+	public static final int LABEL_SUCCESS = 1;
+	public static final int LABEL_FAILED = 0;	
 }

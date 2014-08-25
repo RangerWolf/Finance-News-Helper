@@ -1,4 +1,4 @@
-package utils;
+package utils.db;
 
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -9,6 +9,8 @@ import java.util.Set;
 import model.News;
 
 import org.apache.commons.lang.StringUtils;
+
+import utils.MiscUtils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

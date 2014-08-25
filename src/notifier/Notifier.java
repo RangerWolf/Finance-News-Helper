@@ -14,10 +14,10 @@ import dao.MailAccountDAO;
 import dao.NewsDAO;
 import dao.NotifyHistoryDAO;
 import dao.UserDAO;
-import dao.impl.MongoMailAccoutDAO;
-import dao.impl.MongoNewsDAO;
-import dao.impl.MongoNotifyHistoryDAO;
-import dao.impl.MongoUserDAO;
+import dao.mongodb.MongoMailAccoutDAO;
+import dao.mongodb.MongoNewsDAO;
+import dao.mongodb.MongoNotifyHistoryDAO;
+import dao.mongodb.MongoUserDAO;
 
 public abstract class Notifier {
 

@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.mongodb;
 
 import java.util.Date;
 import java.util.List;
@@ -10,7 +10,7 @@ import model.NotifyHistory;
 import org.apache.commons.lang.StringUtils;
 
 import utils.MiscUtils;
-import utils.MongoDBUtils;
+import utils.db.MongoDBUtils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

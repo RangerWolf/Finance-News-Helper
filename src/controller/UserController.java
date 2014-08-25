@@ -24,9 +24,9 @@ import crawler.impl.GoogNewsCrawler;
 import dao.KeywordDAO;
 import dao.NewsDAO;
 import dao.UserDAO;
-import dao.impl.MongoKeywordDAO;
-import dao.impl.MongoNewsDAO;
-import dao.impl.MongoUserDAO;
+import dao.mongodb.MongoKeywordDAO;
+import dao.mongodb.MongoNewsDAO;
+import dao.mongodb.MongoUserDAO;
 
 @Before(LoginStatusValidator.class)
 public class UserController extends JsonController {

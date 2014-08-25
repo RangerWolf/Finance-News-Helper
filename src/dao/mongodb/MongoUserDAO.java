@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.mongodb;
 
 import java.util.List;
 import java.util.Map;
@@ -7,7 +7,7 @@ import org.apache.commons.lang.StringUtils;
 
 import model.User;
 import utils.MiscUtils;
-import utils.MongoDBUtils;
+import utils.db.MongoDBUtils;
 import validator.AdminActionValidator;
 
 import com.google.common.collect.Lists;

@@ -1,10 +1,10 @@
-package dao.impl;
+package dao.mongodb;
 
 import java.util.List;
 
 import model.Keyword;
 import utils.MiscUtils;
-import utils.MongoDBUtils;
+import utils.db.MongoDBUtils;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;

@@ -11,7 +11,7 @@ import validator.AdminActionValidator;
 import com.jfinal.aop.Before;
 
 import dao.UserDAO;
-import dao.impl.MongoUserDAO;
+import dao.mongodb.MongoUserDAO;
 
 public class NotifierController extends JsonController {
 

@@ -16,13 +16,13 @@ import com.jfinal.aop.Before;
 
 import dao.KeywordDAO;
 import dao.UserDAO;
-import dao.impl.MongoKeywordDAO;
-import dao.impl.MongoUserDAO;
+import dao.mongodb.MongoKeywordDAO;
+import dao.mongodb.MongoUserDAO;
 
 @Before(AdminActionValidator.class)
 public class KeywordController extends JsonController {
-	private static KeywordDAO kDao = new MongoKeywordDAO();
-	private static UserDAO uDao = new MongoUserDAO();
+	private KeywordDAO kDao = new MongoKeywordDAO();
+	private UserDAO uDao = new MongoUserDAO();
 	public void index() {
 		renderFreeMarker("/templates/subscribe.html");
 	}

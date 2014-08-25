@@ -21,8 +21,8 @@ import com.google.common.collect.Lists;
 import crawler.Crawler;
 import dao.KeywordDAO;
 import dao.NewsDAO;
-import dao.impl.MongoKeywordDAO;
-import dao.impl.MongoNewsDAO;
+import dao.mongodb.MongoKeywordDAO;
+import dao.mongodb.MongoNewsDAO;
 
 public class BaiduNewsCrawler implements Crawler{
 

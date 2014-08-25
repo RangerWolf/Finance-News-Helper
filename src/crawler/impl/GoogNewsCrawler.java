@@ -22,8 +22,8 @@ import model.News;
 import crawler.Crawler;
 import dao.KeywordDAO;
 import dao.NewsDAO;
-import dao.impl.MongoKeywordDAO;
-import dao.impl.MongoNewsDAO;
+import dao.mongodb.MongoKeywordDAO;
+import dao.mongodb.MongoNewsDAO;
 
 public class GoogNewsCrawler implements Crawler {
 

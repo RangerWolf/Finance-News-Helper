@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.mongodb;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import model.MailAccount;
 import utils.Constants;
 import utils.MiscUtils;
-import utils.MongoDBUtils;
+import utils.db.MongoDBUtils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

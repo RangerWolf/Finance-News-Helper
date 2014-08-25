@@ -9,7 +9,7 @@ import com.jfinal.aop.Before;
 
 import model.MailAccount;
 import dao.MailAccountDAO;
-import dao.impl.MongoMailAccoutDAO;
+import dao.mongodb.MongoMailAccoutDAO;
 
 public class MailAccountController extends JsonController{
 	

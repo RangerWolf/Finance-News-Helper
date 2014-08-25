@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.mongodb;
 
 import java.util.Date;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import model.News;
 import utils.MiscUtils;
-import utils.MongoDBUtils;
+import utils.db.MongoDBUtils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

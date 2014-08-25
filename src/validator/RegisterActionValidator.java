@@ -10,7 +10,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.validate.Validator;
 
 import dao.UserDAO;
-import dao.impl.MongoUserDAO;
+import dao.mongodb.MongoUserDAO;
 
 public class RegisterActionValidator extends Validator {
 

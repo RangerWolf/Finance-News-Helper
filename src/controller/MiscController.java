@@ -16,11 +16,26 @@ import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.jfinal.aop.Before;
 
+import dao.KeywordDAO;
+import dao.mysql.MySQLKeywordDAO;
+
 public class MiscController extends JsonController{
 
+	private KeywordDAO kDao = new MySQLKeywordDAO();
+	
 	@Before(AdminActionValidator.class)
 	public void clear() {
 		renderText("OK");
+	}
+	
+	public void testMySQL() {
+		try {
+			renderGson(kDao.query());
+		} catch(Exception e) {
+			e.printStackTrace();
+			renderText(e.getMessage());
+		}
+		
 	}
 	
 	public void para() {
