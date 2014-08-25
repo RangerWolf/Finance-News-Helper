@@ -114,7 +114,17 @@ public class UserController extends JsonController {
 		User user = uDao.query(getSessionAttr(Constants.ATTR_LOGIN_EMAIL).toString());
 		String[] keywords = user.getKeywords().split(",");
 		List<News> list = nDao.query(keywords);
-		renderGson(list);
+		List<String> rawNewsTitleList = Lists.newArrayList();
+		List<News> finalList = Lists.newArrayList();
+		
+		for(News news: list) {
+			if(!MiscUtils.hasSimilarStr(news.getTitle(), rawNewsTitleList)) {
+				rawNewsTitleList.add(news.getTitle());
+				finalList.add(news);
+			}
+		}
+		
+		renderGson(finalList);
 	}
 	
 	public void notifyMe() {
