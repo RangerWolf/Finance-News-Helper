@@ -28,24 +28,29 @@ public class KeywordController extends JsonController {
 	}
 	
 	public void update() {
-		List<User> userList = uDao.queryAll();
-		Set<String> wordSet = Sets.newHashSet();
-		for(User user: userList ) {
-			
-			String keyword = user.getKeywords();
-			String[] wordArr = keyword.split(",");
-			for(String word : wordArr) {
-				wordSet.add(word);
+		try {
+			kDao.clear();
+			List<User> userList = uDao.queryAll();
+			Set<String> wordSet = Sets.newHashSet();
+			for(User user: userList ) {
+				
+				String keyword = user.getKeywords();
+				String[] wordArr = keyword.split(",");
+				for(String word : wordArr) {
+					wordSet.add(word);
+				}
 			}
+			List<Keyword> wordList = Lists.newArrayList();
+			for(String word : wordSet) {
+				if(word.trim().length() > 0)
+					wordList.add(new Keyword(word));
+			}
+			kDao.save(wordList);
+			renderGson(kDao.query());
+		} catch(Exception e) {
+			renderText("keyword/update:" + e.getMessage());
 		}
-		List<Keyword> wordList = Lists.newArrayList();
-		for(String word : wordSet) {
-			if(word.trim().length() > 0)
-				wordList.add(new Keyword(word));
-		}
-		kDao.clear();
-		kDao.save(wordList);
-		renderGson(kDao.query());
+		
 	}
 	
 	public void clear() {

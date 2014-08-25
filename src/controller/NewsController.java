@@ -81,7 +81,7 @@ public class NewsController extends JsonController{
 			renderGson(map);
 		} catch(Exception e) {
 			e.printStackTrace();
-			renderText(e.getMessage());
+			renderText("news/google:" + e.getMessage());
 		}
 		
 	}
