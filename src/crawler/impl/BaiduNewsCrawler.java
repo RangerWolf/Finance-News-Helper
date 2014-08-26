@@ -21,8 +21,6 @@ import com.google.common.collect.Lists;
 import crawler.Crawler;
 import dao.KeywordDAO;
 import dao.NewsDAO;
-import dao.mongodb.MongoKeywordDAO;
-import dao.mongodb.MongoNewsDAO;
 import dao.mysql.MySQLKeywordDAO;
 import dao.mysql.MySQLNewsDAO;
 

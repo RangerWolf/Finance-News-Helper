@@ -12,10 +12,10 @@ import validator.RegisterActionValidator;
 import com.jfinal.aop.Before;
 
 import dao.UserDAO;
-import dao.mongodb.MongoUserDAO;
+import dao.mysql.MySQLUserDAO;
 
 public class IndexController extends JsonController {
-	UserDAO uDao = new MongoUserDAO();
+	UserDAO uDao = new MySQLUserDAO();
 	
 	public void index() {
 		if(	getSessionAttr(Constants.ATTR_LOGIN_EMAIL) == null || 

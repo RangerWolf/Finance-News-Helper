@@ -6,16 +6,12 @@ import notifier.Notifier;
 
 import org.apache.commons.lang.StringUtils;
 
-import validator.AdminActionValidator;
-
-import com.jfinal.aop.Before;
-
 import dao.UserDAO;
-import dao.mongodb.MongoUserDAO;
+import dao.mysql.MySQLUserDAO;
 
 public class NotifierController extends JsonController {
 
-	UserDAO userDao = new MongoUserDAO();
+	UserDAO userDao = new MySQLUserDAO();
 	
 	public void index() {
 		renderGson("under contruction");

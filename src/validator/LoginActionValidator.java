@@ -1,15 +1,16 @@
 package validator;
 
+import model.User;
+
 import org.apache.commons.lang.StringUtils;
 
 import utils.Constants;
-import model.User;
 
 import com.jfinal.core.Controller;
 import com.jfinal.validate.Validator;
 
 import dao.UserDAO;
-import dao.mongodb.MongoUserDAO;
+import dao.mysql.MySQLUserDAO;
 
 public class LoginActionValidator extends Validator {
 
@@ -25,7 +26,7 @@ public class LoginActionValidator extends Validator {
 				validateRequiredString("password", "errMsg", "登录密码不能为空");
 				
 				// varify exists
-				UserDAO userDao = new MongoUserDAO();
+				UserDAO userDao = new MySQLUserDAO();
 				User user = userDao.query(c.getPara("email"));
 				if(user == null || !StringUtils.equals(user.getPassword(), c.getPara("password"))) {
 					addError("errMsg", "登录信息有误");

@@ -5,6 +5,8 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
+import model.News;
+
 import org.apache.commons.lang.StringUtils;
 import org.horrabin.horrorss.RssFeed;
 import org.horrabin.horrorss.RssItemBean;
@@ -16,19 +18,17 @@ import utils.MiscUtils;
 import utils.USDateParser;
 
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
 
-import model.News;
 import crawler.Crawler;
 import dao.KeywordDAO;
 import dao.NewsDAO;
-import dao.mongodb.MongoKeywordDAO;
-import dao.mongodb.MongoNewsDAO;
+import dao.mysql.MySQLKeywordDAO;
+import dao.mysql.MySQLNewsDAO;
 
 public class GoogNewsCrawler implements Crawler {
 
-	private static NewsDAO newsDao = new MongoNewsDAO();
-	private static KeywordDAO wordDao = new MongoKeywordDAO();
+	private static NewsDAO newsDao = new MySQLNewsDAO();
+	private static KeywordDAO wordDao = new MySQLKeywordDAO();
 	
 	@Override
 	public List<String> getKeywords() {

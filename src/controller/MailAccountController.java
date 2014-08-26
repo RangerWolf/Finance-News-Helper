@@ -2,18 +2,18 @@ package controller;
 
 import java.util.List;
 
+import model.MailAccount;
 import validator.AdminActionValidator;
 import validator.MailAccountAddValidator;
 
 import com.jfinal.aop.Before;
 
-import model.MailAccount;
 import dao.MailAccountDAO;
-import dao.mongodb.MongoMailAccoutDAO;
+import dao.mysql.MySQLMailAccountDAO;
 
 public class MailAccountController extends JsonController{
 	
-	MailAccountDAO maDao = new MongoMailAccoutDAO();
+	MailAccountDAO maDao = new MySQLMailAccountDAO();
 	
 	public void index() {
 		renderText("under construction");

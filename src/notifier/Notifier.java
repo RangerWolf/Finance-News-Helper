@@ -14,10 +14,10 @@ import dao.MailAccountDAO;
 import dao.NewsDAO;
 import dao.NotifyHistoryDAO;
 import dao.UserDAO;
-import dao.mongodb.MongoMailAccoutDAO;
-import dao.mongodb.MongoNewsDAO;
-import dao.mongodb.MongoNotifyHistoryDAO;
-import dao.mongodb.MongoUserDAO;
+import dao.mysql.MySQLMailAccountDAO;
+import dao.mysql.MySQLNewsDAO;
+import dao.mysql.MySQLNotifyHistoryDAO;
+import dao.mysql.MySQLUserDAO;
 
 public abstract class Notifier {
 
@@ -26,10 +26,10 @@ public abstract class Notifier {
 	private NotifyHistory history = null;
 	protected List<String> sentTitleList = null;
 	
-	protected UserDAO userDao = new MongoUserDAO();
-	protected NewsDAO newsDao = new MongoNewsDAO();
-	protected MailAccountDAO maDao = new MongoMailAccoutDAO();
-	protected NotifyHistoryDAO nhDao = new MongoNotifyHistoryDAO();
+	protected UserDAO userDao = new MySQLUserDAO();
+	protected NewsDAO newsDao = new MySQLNewsDAO();
+	protected MailAccountDAO maDao = new MySQLMailAccountDAO();
+	protected NotifyHistoryDAO nhDao = new MySQLNotifyHistoryDAO();
 	
 	public Notifier(String userid) {
 		// init targetUser

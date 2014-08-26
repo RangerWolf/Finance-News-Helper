@@ -24,15 +24,15 @@ import crawler.impl.GoogNewsCrawler;
 import dao.KeywordDAO;
 import dao.NewsDAO;
 import dao.UserDAO;
-import dao.mongodb.MongoKeywordDAO;
-import dao.mongodb.MongoNewsDAO;
-import dao.mongodb.MongoUserDAO;
+import dao.mysql.MySQLKeywordDAO;
+import dao.mysql.MySQLNewsDAO;
+import dao.mysql.MySQLUserDAO;
 
 @Before(LoginStatusValidator.class)
 public class UserController extends JsonController {
-	private UserDAO uDao = new MongoUserDAO();
-	private NewsDAO nDao = new MongoNewsDAO();
-	private KeywordDAO kDao = new MongoKeywordDAO();
+	private UserDAO uDao = new MySQLUserDAO();
+	private NewsDAO nDao = new MySQLNewsDAO();
+	private KeywordDAO kDao = new MySQLKeywordDAO();
 	
 	public void index() {
 		keepPara();

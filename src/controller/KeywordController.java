@@ -16,13 +16,13 @@ import com.jfinal.aop.Before;
 
 import dao.KeywordDAO;
 import dao.UserDAO;
-import dao.mongodb.MongoKeywordDAO;
-import dao.mongodb.MongoUserDAO;
+import dao.mysql.MySQLKeywordDAO;
+import dao.mysql.MySQLUserDAO;
 
 @Before(AdminActionValidator.class)
 public class KeywordController extends JsonController {
-	private KeywordDAO kDao = new MongoKeywordDAO();
-	private UserDAO uDao = new MongoUserDAO();
+	private KeywordDAO kDao = new MySQLKeywordDAO();
+	private UserDAO uDao = new MySQLUserDAO();
 	public void index() {
 		renderFreeMarker("/templates/subscribe.html");
 	}
@@ -74,7 +74,6 @@ public class KeywordController extends JsonController {
 					list.add(new Keyword(word));
 				}
 			}
-			KeywordDAO kDao = new MongoKeywordDAO();
 			int ret = kDao.save(list);
 			renderGson(ret);
 		}

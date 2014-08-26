@@ -2,19 +2,19 @@ package validator;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import model.User;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.jfinal.core.Controller;
 import com.jfinal.validate.Validator;
 
 import dao.UserDAO;
-import dao.mongodb.MongoUserDAO;
+import dao.mysql.MySQLUserDAO;
 
 public class RegisterActionValidator extends Validator {
 
-	UserDAO userDao = new MongoUserDAO();
+	UserDAO userDao = new MySQLUserDAO();
 	
 	@Override
 	protected void validate(Controller c) {

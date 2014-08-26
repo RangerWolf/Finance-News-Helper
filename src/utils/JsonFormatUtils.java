@@ -1,13 +1,6 @@
 package utils;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.Gson;
-
-import model.User;
-import dao.UserDAO;
-import dao.mongodb.MongoUserDAO;
 
 public class JsonFormatUtils {
 	
@@ -156,10 +149,5 @@ public class JsonFormatUtils {
 	}
 	
 	public static void main(String[] args) {
-		UserDAO uDao = new MongoUserDAO();
-		List<User> list =uDao.queryAll();
-		String jsonStr = new Gson().toJson(list);
-		String result = new JsonFormatUtils().formatJson(jsonStr, "    ");
-		System.out.println(result);
 	}
 }
