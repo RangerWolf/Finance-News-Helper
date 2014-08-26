@@ -35,7 +35,7 @@ public class MySQLKeywordDAO implements KeywordDAO{
 		// translate list to object[][]
 		String[][] objects = new String[insertedList.size()][1];
 		for(int i = 0; i < insertedList.size(); i++) {
-			objects[i][1] = insertedList.get(i);
+			objects[i][0] = insertedList.get(i);
 		}
 		boolean ret = MySQLUtils.batchInsert("insert into keyword(word) values(?)", objects);
 		if(ret == true) {

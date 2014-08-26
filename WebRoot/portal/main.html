@@ -70,7 +70,12 @@
 							</div>
 							<div class="modal-body">
 								<table class="table table-condensed" id="chooseStockTable">
-									
+									<tr>
+										<th>#</th>
+										<th>代码</th>
+										<th>名称</th>
+										<th>操作</th>
+									</tr>
 								</table>
 
 							</div>
@@ -85,7 +90,7 @@
 		</div>
 		<div class="row" style="margin-top: 15px">
 			<!-- Table -->
-			<table class="table table-hover" id="stockTable">
+			<table class="table table-striped" id="stockTable">
 				<tr>
 					<th>代码</th>
 					<th>名称</th>
@@ -100,8 +105,10 @@
 				<tr id="loadingRow">
 					<td colspan="9">正在加载...</td>
 				</tr>
-				<tr id="noTargetStock" class="hidden">
-					<td colspan="9">您目前没有关注任何股票</td>
+				<tr id="noTargetStock" class="hidden info">
+					<td colspan="9">您目前没有关注任何股票, 可在右上角的输入框输入股票代码或者中文简称进行搜索
+					<label style='color:red' class="pull-right">*注意：目前只支持上证与深证</label>
+					</td>
 				</tr>
 			</table>
 
@@ -122,10 +129,13 @@
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			    <h3 class="panel-title" style="font-weight:bold">您关注的关键词
-			    	<span class="badge pull-right" style="color:black; background-color:rgba(0,0,0,0);font-weight:normal">*<label style="color:red">双击</label>直接删除关注的关键词</span>
+			    	<span class="badge pull-right" style="color:black; background-color:rgba(0,0,0,0);font-weight:normal">
+			    		*<label style="color:red">双击</label>直接删除关注的关键词
+			    	</span>
 			    </h3>
 			  </div>
 			  <div class="panel-body" id="keywordHolder">
+			  	<div id="tipForAddNewKeyword">您目前没有添加任何关键字，可在下方输入框进行提交</div>
 			  </div>
 			  <div class="panel-footer">
 			  	<div class="input-group" style="width:30%" >
@@ -140,17 +150,15 @@
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			    <h3 class="panel-title" style="font-weight:bold">最新消息预览
-			    	<span class="badge pull-right" style="color:black; background-color:rgba(0,0,0,0);font-weight:normal">*根据您选中的关键词筛选出<label style="color:red">10小时以内</label>的新闻</span>
+			    	<span class="badge pull-right" 
+			    		style="color:black; background-color:rgba(0,0,0,0);font-weight:normal">
+			    		*根据您选中的关键词筛选出<label style="color:red">10小时以内</label>的新闻
+			    	</span>
 			    </h3>
 			  </div>
 			  <div class="panel-body" id="latestNewsHolder" style="height: 250px;overflow-y:scroll;">
-			  	<!-- Template 
-			  	<div>
-				  	<span style="">乐视X50 Air 超多APP海量视频资源_客厅好选择7款京东热卖大屏4K电视推荐</span>
-				  	<span class="pull-right">2014-08-20 12:53</span>
-			  	</div>
-			  	 -->
 			  	 <p id="noNewsTip" class="hidden">暂时没有更多的新闻</p>
+			  	 <p id="fetchingNewsTip" style="display: none">正在刷新...</p>
 			  </div>
 			  <div class="panel-footer">
 			  <button class="btn btn-success btn-sm" onclick="showLatestNews()">
@@ -225,29 +233,42 @@
 				q : stockCode
 			},
 			success : function(data) {
-				if (data.length == 0) {
+				
+				localData = new Array();
+				for(var i = 0 ; i < data.length; i++) {
+					if(data[i].type == "SZ" || data[i].type == "SH") {
+						localData.push(data[i])
+					}
+				}
+				
+				if (localData.length == 0) {
 					alert("没有找到任何股票");
-				} else if (data.length == 1) {
+				} else if (localData.length == 1) {
 					var originalStockStr = $("#userstocks").val(); 
 					var originalKeywordStr = $("#userkeywords").val();
 					
 					var symbol = data[0].symbol;
 					var type = data[0].type;
 					var name = data[0].name;
-					// build stockCode
-					var stockCode = type + "_" + symbol; // 比如 US_GOOG
-					if(type=="SH") stockCode = "0" + symbol;
-					else if(type == "SZ") stockCode = "1" + symbol;
-					if(originalStockStr.indexOf(stockCode) == -1 ) {
-						$("#userstocks").val(originalStockStr + stockCode + ",")	// 将新的stockCode写到本地目录
-						if(originalKeywordStr.indexOf(name) == -1) $("#userkeywords").val(originalKeywordStr + name + ",");
-						addKeywordInUI(name);
-						updateUserSetting();
+					if(type != "SH" && type != "SZ") {
+						alert("暂时只支持上证与深证券!")
 					} else {
-						alert("此股票您已经添加");
+						// build stockCode
+						var stockCode = type + "_" + symbol; // 比如 US_GOOG
+						console.log("~~~" + stockCode)
+						if(type=="SH") stockCode = "0" + symbol;
+						else if(type == "SZ") stockCode = "1" + symbol;
+						if(originalStockStr.indexOf(stockCode) == -1 ) {
+							$("#userstocks").val(originalStockStr + stockCode + ",")	// 将新的stockCode写到本地目录
+							if(originalKeywordStr.indexOf(name) == -1) $("#userkeywords").val(originalKeywordStr + name + ",");
+							addKeywordInUI(name);
+							updateUserSetting();
+						} else {
+							alert("此股票您已经添加");
+						}
 					}
 					
-				} else if (data.length > 1) {
+				} else if (localData.length > 1) {
 					// 在chooseStockTable之中添加表格						
 					chooseStockTable = $("#chooseStockTable")
 					$(".stockChooseList").remove();
@@ -287,6 +308,7 @@
 			}
 		}).done(function(data) {
 			updateStockTable();
+			showLatestNews();
 		});
 	}
 
@@ -320,6 +342,7 @@
 		}
 	}
 
+	// only for stock table
 	function updateRow(data) {
 		if($("#" + data.code).length ==  0) {
 			addRow(data);
@@ -341,6 +364,7 @@
 		}
 	}
 
+	// only for stock table
 	function addRow(data) {
 		rowStr = '<tr id="' + data.code + '">' + 
 				'<td style="width: 75px; color: rgb(0, 160, 206)">' + data.symbol + '</td>' +
@@ -374,6 +398,7 @@
 	
 	function addKeywordInUI(word) {
 		if(word == null || word == undefined || word.length == 0) return;
+		$("#tipForAddNewKeyword").hide()
 		label = $('<span class="label label-warning" style="margin:5px;cursor:pointer">' + word + '</span>');
 		label.dblclick(function(){
 			var curText = $(this).text();
@@ -382,6 +407,10 @@
 			$("#userkeywords").val(newText);
 			updateUserSetting();
 			$(this).remove()
+			
+			if($("#userkeywords").val() == "") {
+				$("#tipForAddNewKeyword").show()
+			}
 		});
 		$("#keywordHolder").prepend(label)
 	}
@@ -397,11 +426,10 @@
 				alert("关键字的长度不能少于2")
 			} 
 			else {
-				addKeywordInUI(curWord);
-				
 				$("#userkeywords").val(totalText + curWord + ",");
 				$("#newKeywordTxt").val("");
-				updateUserSetting();				
+				updateUserSetting();
+				addKeywordInUI(curWord);
 			}
 		} else {
 			alert("关键字不能为空且不能包含特殊符号")
@@ -411,13 +439,16 @@
 	
 	
 	function showLatestNews() {
+		console.log("keyword=" + $("#userkeywords").val())
 		$("#latestNewsHolder .newsDiv").remove();
 		$("#noNewsTip").addClass("hidden")
+	    $("#fetchingNewsTip").show()
 		$.ajax({
 			url : "${base}/user/latestNews",
 			dataType : "JSON",
 			method : "get"
-		}).done(function(data) {
+		})
+		.done(function(data) {
 			if(data.length == 0) {
 				$("#noNewsTip").removeClass("hidden")
 			} else {
@@ -431,6 +462,9 @@
 					$("#latestNewsHolder").append(div);
 				});
 			}
+		})
+		.always(function(){
+			 $("#fetchingNewsTip").hide()
 		});
 	}
 	

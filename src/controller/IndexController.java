@@ -52,7 +52,7 @@ public class IndexController extends JsonController {
 		
 		uDao.saveOrUpdate(user);
 		getSession().setAttribute(Constants.ATTR_LOGIN_EMAIL, email);
-		forwardAction("/user/main");
+		redirect("/user/main");
 	}
 	
 	@Before(AdminActionValidator.class)

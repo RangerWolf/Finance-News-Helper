@@ -48,6 +48,7 @@ public class KeywordController extends JsonController {
 			kDao.save(wordList);
 			renderGson(kDao.query());
 		} catch(Exception e) {
+			e.printStackTrace();
 			renderText("keyword/update:" + e.getMessage());
 		}
 		

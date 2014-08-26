@@ -64,7 +64,6 @@ public class UserController extends JsonController {
 		for(String word : words) {
 			Keyword kw = new Keyword(word);
 			wordList.add(kw);
-			
 			if(!allWords.contains(word)) {
 				newWords.add(word);
 			}
@@ -112,18 +111,20 @@ public class UserController extends JsonController {
 	
 	public void latestNews() {
 		User user = uDao.query(getSessionAttr(Constants.ATTR_LOGIN_EMAIL).toString());
-		String[] keywords = user.getKeywords().split(",");
-		List<News> list = nDao.query(keywords);
-		List<String> rawNewsTitleList = Lists.newArrayList();
 		List<News> finalList = Lists.newArrayList();
-		
-		for(News news: list) {
-			if(!MiscUtils.hasSimilarStr(news.getTitle(), rawNewsTitleList)) {
-				rawNewsTitleList.add(news.getTitle());
-				finalList.add(news);
+		if(user.getKeywords().trim().length() > 0) {
+			String[] keywords = user.getKeywords().split(",");
+			
+			List<News> list = nDao.query(keywords);
+			List<String> rawNewsTitleList = Lists.newArrayList();
+			
+			for(News news: list) {
+				if(!MiscUtils.hasSimilarStr(news.getTitle(), rawNewsTitleList)) {
+					rawNewsTitleList.add(news.getTitle());
+					finalList.add(news);
+				}
 			}
 		}
-		
 		renderGson(finalList);
 	}
 	

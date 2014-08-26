@@ -18,7 +18,11 @@ public class MySQLUserDAO implements UserDAO {
 					user.getPassword(),
 					user.getEmail());
 		} else {
-			MySQLUtils.insert("insert into user values(?)", user);
+			MySQLUtils.insert("insert into user(keywords,stocks,password,email) values(?,?,?,?)",
+					user.getKeywords(), 
+					user.getStocks(),
+					user.getPassword(),
+					user.getEmail());
 		}
 	}
 
