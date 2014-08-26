@@ -34,13 +34,20 @@ public class MySQLConnTools {
             String url = "jdbc:mysql://127.0.0.1:3306/fin_news_helper?useUnicode=true&characterEncoding=utf8"; 
             String user = "root"; 
             String password = "";
-            
-            if(hostName.startsWith("appid")){  // 说明在BAE上
+            if(hostName.contains("wenjun") || hostName.contains("win7")) {
+            	// do nothing
+            }
+            else if(hostName.startsWith("appid")){  // 说明在BAE上
 				// BAE上的hostname= ${APP ID}
             	url = "jdbc:mysql://sqld.duapp.com:4050/nCgXDCznnIguFddwUgYA?useUnicode=true&characterEncoding=utf8";
             	user = "INGNrdymi7y9yhDwMgxpsqQt";
             	password = "r3awv58TswHNiDYRCESSkiLtuwXttUbC";
-			} 
+			} else {
+				// try JAE mysql
+				url = "jdbc:mysql://mysql.jae.jd.com:4066/angerolf_mysql_6lykg4dg?useUnicode=true&characterEncoding=utf8";
+				user = "aaFeHKPA";
+				password = "1DyBTn4hfqLb";
+			}
             
             mysqlDS.setURL(url);
             mysqlDS.setUser(user);
