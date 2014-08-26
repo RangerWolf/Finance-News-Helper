@@ -17,7 +17,7 @@ public class MySQLMailAccountDAO implements MailAccountDAO {
 
 	@Override
 	public MailAccount getActiveMailAccount() {
-		return (MailAccount) MySQLUtils.query(MailAccount.class, "select * from mail_account where isActive = ?", Constants.LABEL_SUCCESS);
+		return (MailAccount) MySQLUtils.query(MailAccount.class, "select * from mail_account where isActive = ?", true);
 	}
 
 	@Override

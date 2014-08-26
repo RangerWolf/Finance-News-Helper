@@ -88,7 +88,7 @@ public class EmailNotifier extends Notifier{
 	@Override
 	protected Boolean sendNotification(String notifyContent) {
 		MailAccount account =  maDao.getActiveMailAccount();
-		System.out.println(account.getMailAddr());
+		System.out.println("MailAddr:" + account.getMailAddr());
 		MailInfo info = new MailInfo();
 		info.setTo(this.targetUser.getEmail());
 		info.setBody(notifyContent);
