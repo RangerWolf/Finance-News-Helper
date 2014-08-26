@@ -69,7 +69,7 @@ public class EmailNotifier extends Notifier{
 				desc = StringUtils.replaceEach(desc, keywordArr, redWordArr);
 				
 				List<String> searchList = Lists.newArrayList("${LINK}", "${TITLE}", "${DESC}", "${UPDATE_TIME}", "${FROM}");
-				List<String> replaceList = Lists.newArrayList(news.getNewsUrl(), title, desc, sdf.format(new Date(news.getDateTime())), news.getFrom());
+				List<String> replaceList = Lists.newArrayList(news.getNewsUrl(), title, desc, sdf.format(new Date(news.getDateTime())), news.getPubFrom());
 				temp = StringUtils.replaceEach(temp, 
 						convertListAsStringArray(searchList),
 						convertListAsStringArray(replaceList));

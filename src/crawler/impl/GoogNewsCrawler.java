@@ -79,7 +79,7 @@ public class GoogNewsCrawler implements Crawler {
 	        		news.setTitle(title);
 	        	else {
 	        		news.setTitle(title.substring(0,sepIdx).trim());
-	        		news.setFrom(title.substring(sepIdx + 1).trim());
+	        		news.setPubFrom(title.substring(sepIdx + 1).trim());
 	        	}
 	        	
 	        	// link
@@ -95,8 +95,8 @@ public class GoogNewsCrawler implements Crawler {
 	        	String desc = item.getDescription();
 	        	desc = Jsoup.parse(desc).text();
 	        	desc = StringUtils.replaceOnce(desc, title, "");
-	        	if(news.getFrom().length() > 0)
-	        		desc = StringUtils.replaceOnce(desc, news.getFrom(), "");
+	        	if(news.getPubFrom().length() > 0)
+	        		desc = StringUtils.replaceOnce(desc, news.getPubFrom(), "");
 	        	sepIdx = desc.indexOf("...");
 	        	if(sepIdx != -1) {
 	        		desc = desc.substring(0, sepIdx).trim();

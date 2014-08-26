@@ -15,7 +15,7 @@ public class MySQLKeywordDAO implements KeywordDAO{
 	
 	@Override
 	public List<String> query() {
-		List<Keyword> list = MySQLUtils.query("select * from keyword", Keyword.class);
+		List<Keyword> list = MySQLUtils.queryAll("select * from keyword", Keyword.class);
 		List<String> retList = Lists.newArrayList();
 		for(Keyword word: list) {
 			retList.add(word.getWord());

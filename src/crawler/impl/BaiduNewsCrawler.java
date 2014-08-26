@@ -23,11 +23,15 @@ import dao.KeywordDAO;
 import dao.NewsDAO;
 import dao.mongodb.MongoKeywordDAO;
 import dao.mongodb.MongoNewsDAO;
+import dao.mysql.MySQLKeywordDAO;
+import dao.mysql.MySQLNewsDAO;
 
 public class BaiduNewsCrawler implements Crawler{
 
-	private static NewsDAO newsDao = new MongoNewsDAO();
-	private static KeywordDAO wordDao = new MongoKeywordDAO();
+//	private static NewsDAO newsDao = new MongoNewsDAO();
+//	private static KeywordDAO wordDao = new MongoKeywordDAO();
+	private NewsDAO newsDao = new MySQLNewsDAO();
+	private KeywordDAO wordDao = new MySQLKeywordDAO();
 	
 	
 	@Override
@@ -73,7 +77,7 @@ public class BaiduNewsCrawler implements Crawler{
 	        	News news = new News();
 	        	news.setTitle(item.getTitle());
 	        	news.setDescription(item.getDescription());
-	        	news.setFrom(item.getAuthor());
+	        	news.setPubFrom(item.getAuthor());
 	        	news.setNewsUrl(item.getLink());
 	        	news.setDateTime(item.getPubDate().getTime());
 	        	long timeDiff = now.getTime() - item.getPubDate().getTime();

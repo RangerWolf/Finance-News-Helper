@@ -14,6 +14,7 @@ public interface NewsDAO {
 	
 	/**
 	 * 根据关键字进行查询10个小时以内的新闻<br>
+	 * 关键字在新闻标题或者内容之中出现<br>
 	 * 关键字支持一次使用多个
 	 * @param keywords
 	 * @return

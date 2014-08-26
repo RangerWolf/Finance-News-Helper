@@ -1,17 +1,30 @@
 package utils.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import model.News;
+import model.NotifyHistory;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapHandler;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+
+import dao.NotifyHistoryDAO;
+import dao.mysql.MySQLNewsDAO;
+import dao.mysql.MySQLNotifyHistoryDAO;
 
 public class MySQLUtils {
 	
@@ -22,7 +35,7 @@ public class MySQLUtils {
 	public static Boolean truncate(String tablename) {
 		QueryRunner qRunner = new QueryRunner(MySQLConnTools.getMySQLDataSource()); 
         try {
-        	int result = qRunner.update("tuncate ?", tablename);
+        	int result = qRunner.update("truncate " + tablename);
 			return true;
 		} catch (SQLException e) {
 //			logger.error(e.getMessage());
@@ -44,6 +57,25 @@ public class MySQLUtils {
 			 DbUtils.closeQuietly(conn);
 		}
 		return false;
+	}
+	
+	public static Boolean batchInsertWithBeans(String sql,String[] propertyName, Object... list) {
+		Connection conn = MySQLConnTools.makeConnection(); 
+        //创建SQL执行工具 
+        QueryRunner qRunner = new QueryRunner(); 
+        try {
+        	PreparedStatement ps = conn.prepareStatement(sql);
+        	for(Object o : list) {
+        		qRunner.fillStatementWithBean(ps, o, propertyName);
+        		ps.addBatch();
+        	}
+        	System.out.println(new Gson().toJson(ps.executeBatch()));
+			return true;
+		} catch (SQLException e) {
+//			logger.error(e.getMessage());
+			e.printStackTrace();
+		} 
+        return false;
 	}
 	
 	public static Boolean batchInsert(String sql, Object[][] objects) {
@@ -76,6 +108,19 @@ public class MySQLUtils {
         return false;
 	}
 	
+	public static Map query(String sql, Object... params) {
+		try {
+            QueryRunner qRunner = new QueryRunner(MySQLConnTools.getMySQLDataSource());
+			Map obj = qRunner.query(sql, new MapHandler(), params);
+			return obj;
+		} catch (SQLException e) {
+//			logger.error(e.getMessage());
+			e.printStackTrace();
+		} 
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public static Object query(Class cls, String sql, Object... params) {
         try {
             QueryRunner qRunner = new QueryRunner(MySQLConnTools.getMySQLDataSource());
@@ -89,7 +134,7 @@ public class MySQLUtils {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static List query(String sql, Class cls) {
+	public static List queryAll(String sql, Class cls) {
 		//创建连接 
         List list = null;
         try {
@@ -105,29 +150,33 @@ public class MySQLUtils {
 		return list;
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static List queryList(String sql, Class cls, Object... params) {
+		//创建连接 
+        List list = null;
+        try {
+            //创建SQL执行工具 
+        	QueryRunner qRunner = new QueryRunner(MySQLConnTools.getMySQLDataSource());
+            //执行SQL查询，并获取结果
+			list = qRunner.query(sql, new BeanListHandler(cls), params);
+			return list;
+		} catch (SQLException e) {
+//			logger.error(e.getMessage());
+			e.printStackTrace();
+		} 
+		return list;
+	}
+	
 	
 	
 	public static void main(String[] args) {
-		
-//		System.out.println(isMailSentBefore("[propertyweek@ubm.com]"));;
-//		Feed feed = getNotUsedFeed();
-//		System.out.println(feed == null);
-//		System.out.println(new Gson().toJson(feed));
-//		addNewFeeds("test1");
-//		setFeedUsed("test1");
-		
-//		APKInfo info = new APKInfo();
-//		info.setId("11");
-//		info.setTitle("test2");
-//		
-//		APKInfo info2 = new APKInfo();
-//		info2.setId("123");
-//		info2.setTitle("aaaa"
-//				);
-//		List<APKInfo> list = new ArrayList<APKInfo>();
-//		list.add(info);
-//		list.add(info2);
-		
-		
+		NotifyHistoryDAO dao = new MySQLNotifyHistoryDAO();
+		NotifyHistory h = new NotifyHistory();
+		h.setId("123");
+		h.setLastNotifyResult(true);
+		h.setLastNotifyTime(new Date().getTime());
+		h.setTitleList(Lists.newArrayList("aaa", "bbbb"));
+		dao.saveOrUpdate(h);
+		System.out.println(new Gson().toJson(dao.query("1123")));;
 	}
 }

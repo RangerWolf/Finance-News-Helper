@@ -7,14 +7,7 @@ public class News {
 	String description;
 	String newsUrl;
 	Long dateTime;
-	String from;
-	
-	public String getNewsUrl() {
-		return newsUrl;
-	}
-	public void setNewsUrl(String newsUrl) {
-		this.newsUrl = newsUrl;
-	}
+	String pubFrom;
 	public String getTitle() {
 		return title;
 	}
@@ -27,11 +20,11 @@ public class News {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getFrom() {
-		return from;
+	public String getNewsUrl() {
+		return newsUrl;
 	}
-	public void setFrom(String from) {
-		this.from = from;
+	public void setNewsUrl(String newsUrl) {
+		this.newsUrl = newsUrl;
 	}
 	public Long getDateTime() {
 		return dateTime;
@@ -39,5 +32,12 @@ public class News {
 	public void setDateTime(Long dateTime) {
 		this.dateTime = dateTime;
 	}
+	public String getPubFrom() {
+		return pubFrom;
+	}
+	public void setPubFrom(String pubFrom) {
+		this.pubFrom = pubFrom;
+	}
+	
 	
 }
