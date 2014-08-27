@@ -18,6 +18,7 @@ import model.User;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.google.gson.Gson;
 import com.jfinal.aop.Before;
 
 import crawler.Crawler;
@@ -70,7 +71,7 @@ public class CrondController extends JsonController {
 					map.put(word, false);
 				}
 			}
-			renderGson(map);
+			renderGson(map, true);
 		} catch(Exception e) {
 			e.printStackTrace();
 			renderText("keyword/update:" + e.getMessage());
@@ -95,6 +96,6 @@ public class CrondController extends JsonController {
 			}
 			map.put(user.getEmail(), afterSize - beforeSize);
 		}
-		renderGson(map);
+		renderGson(map, true);
 	}
 }

@@ -42,8 +42,14 @@ public class JsonController extends Controller{
 	}
 	
 	public void renderGson(Object json) {
-		renderFreeMarker("");
 		renderHtml(new Gson().toJson(json));
+	}
+	
+	public void renderGson(Object json, boolean outputToConsole) {
+		String ret = new Gson().toJson(json);
+		if(outputToConsole)
+			System.out.println(ret);
+		renderHtml(ret);
 	}
 	
 	
