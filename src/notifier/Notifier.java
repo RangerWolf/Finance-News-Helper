@@ -46,10 +46,10 @@ public abstract class Notifier {
 			history = new NotifyHistory();
 			history.setId(userid);
 			history.setLastNotifyResult(false);
-			history.setLastNotifyTime(new Date().getTime());
 			sentTitleList = Lists.newArrayList();
 			history.setTitleList(sentTitleList);
 		}
+		history.setLastNotifyTime(new Date().getTime());
 	}
 	
 	public void run() {
