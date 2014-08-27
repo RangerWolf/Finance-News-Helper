@@ -31,11 +31,7 @@ public class DefaultConfig extends JFinalConfig{
 		String hostName = MiscUtils.getHostName();
 		if(hostName.contains("wenjun") || hostName.contains("win7")) {
 			PropertyConfigurator.configure(loadPropertyFile("log4j-local.properties"));
-		} else if(hostName.startsWith("appid")){
-			PropertyConfigurator.configure(loadPropertyFile("log4j-bae.properties"));
-		} else {
-			PropertyConfigurator.configure(loadPropertyFile("log4j-jae.properties"));
-		}
+		} 
 		
 	}
 
