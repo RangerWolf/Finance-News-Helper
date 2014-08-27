@@ -37,7 +37,7 @@ public class CrondController extends JsonController {
 	private UserDAO uDao = new MySQLUserDAO();
 	private NotifyHistoryDAO nhDao = new MySQLNotifyHistoryDAO();
 	
-	public void updateKeywordAndGetNews() {
+	public void updateKeyword() {
 		try {
 			// update keyword
 			kDao.clear();
@@ -57,30 +57,30 @@ public class CrondController extends JsonController {
 					wordList.add(new Keyword(word));
 			}
 			kDao.save(wordList);
-			
-			// crawl news from google
-			Crawler bdCrawler = new GoogNewsCrawler();
-			List<String> keywordsList = bdCrawler.getKeywords();
-			Map<String, Boolean> map = Maps.newHashMap();
-			for(String word : keywordsList) {
-				String url = bdCrawler.buildURL(word);
-				List<News> list = bdCrawler.parse(url);
-				if(list.size() > 0) {
-					map.put(word, bdCrawler.save(list));
-				} else {
-					map.put(word, false);
-				}
-			}
-			renderGson(map, true);
+			renderGson(wordList);
 		} catch(Exception e) {
 			e.printStackTrace();
 			renderText("keyword/update:" + e.getMessage());
 		}
 	}
 	
-	public void notifyAllUsers() {
+	public void fetchNewsAndNotifyAllUsers() {
+		
+		// crawl news from google
+		Crawler bdCrawler = new GoogNewsCrawler();
+		List<String> keywordsList = bdCrawler.getKeywords();
+		Map<String, Object> map = Maps.newHashMap();
+		for(String word : keywordsList) {
+			String url = bdCrawler.buildURL(word);
+			List<News> list = bdCrawler.parse(url);
+			if(list.size() > 0) {
+				map.put(word, bdCrawler.save(list));
+			} else {
+				map.put(word, false);
+			}
+		}
+		
 		List<User> userList = uDao.queryAll();
-		Map<String, Integer> map = Maps.newHashMap();
 		for(User user : userList) {
 			NotifyHistory before = nhDao.query(user.getEmail());
 			int beforeSize = 0;
