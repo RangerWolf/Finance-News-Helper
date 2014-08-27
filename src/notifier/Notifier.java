@@ -63,8 +63,8 @@ public abstract class Notifier {
 					boolean ret = this.sendNotification(content);
 					history.setLastNotifyResult(ret);
 				}
-				this.recordSendHistory();
 			}
+			this.recordSendHistory();
 		}
 	}
 	
