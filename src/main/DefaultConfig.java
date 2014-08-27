@@ -3,7 +3,9 @@ package main;
 import org.apache.log4j.PropertyConfigurator;
 
 import utils.MiscUtils;
+import validator.AdminActionValidator;
 
+import com.jfinal.aop.Before;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -13,6 +15,7 @@ import com.jfinal.config.Routes;
 import com.jfinal.ext.handler.ContextPathHandler;
 import com.jfinal.ext.interceptor.SessionInViewInterceptor;
 
+import controller.CrondController;
 import controller.IndexController;
 import controller.KeywordController;
 import controller.MailAccountController;
@@ -45,6 +48,7 @@ public class DefaultConfig extends JFinalConfig{
 		me.add("/ma", MailAccountController.class);
 		me.add("/notify", NotifierController.class);
 		me.add("/stock", StockController.class);
+		me.add("/crond", CrondController.class);
 	}
 
 	@Override
