@@ -1,5 +1,9 @@
 package main;
 
+import org.apache.log4j.PropertyConfigurator;
+
+import utils.MiscUtils;
+
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -24,7 +28,14 @@ public class DefaultConfig extends JFinalConfig{
 	public void configConstant(Constants me) {
 		// TODO Auto-generated method stub
 		me.setDevMode(true);
-//		PropertyConfigurator.configure(loadPropertyFile("log4j.properties"));
+		String hostName = MiscUtils.getHostName();
+		if(hostName.contains("wenjun") || hostName.contains("win7")) {
+			PropertyConfigurator.configure(loadPropertyFile("log4j-local.properties"));
+		} else if(hostName.startsWith("appid")){
+			PropertyConfigurator.configure(loadPropertyFile("log4j-bae.properties"));
+		} else {
+			PropertyConfigurator.configure(loadPropertyFile("log4j-jae.properties"));
+		}
 		
 	}
 
