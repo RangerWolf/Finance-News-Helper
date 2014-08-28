@@ -17,7 +17,7 @@ public class MySQLNewsDAO implements NewsDAO {
 
 	@Override
 	public int save(List<News> newsList) {
-		if (MySQLUtils.batchInsertWithBeans("insert into news_record(title, description, newsUrl, dateTime, pubfrom) values(?,?,?,?,?)", 
+		if (MySQLUtils.batchInsertWithBeans("insert ignore into news_record(title, description, newsUrl, dateTime, pubfrom) values(?,?,?,?,?)", 
 				new String[]{"title", "description", "newsUrl", "dateTime", "pubFrom"},
 				newsList.toArray()) == true) {
 			return Constants.LABEL_SUCCESS;
