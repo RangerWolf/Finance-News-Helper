@@ -399,7 +399,7 @@
 	function addKeywordInUI(word) {
 		if(word == null || word == undefined || word.length == 0) return;
 		$("#tipForAddNewKeyword").hide()
-		label = $('<span class="label label-warning" style="margin:5px;cursor:pointer">' + word + '</span>');
+		label = $('<button type="button" class="btn btn-warning btn-sm" style="margin:5px;cursor:pointer">' + word + '</button>');
 		label.dblclick(function(){
 			var curText = $(this).text();
 			var totalText = $("#userkeywords").val();
@@ -417,13 +417,18 @@
 	$("#addKeywordBtn").click(function(){
 		var curWord = $("#newKeywordTxt").val();
 		var totalText = $("#userkeywords").val();
+		console.log("!!!!" + curWord.length)
 		if(totalText.indexOf(curWord + ",") != -1) {
 			alert("重复的关键字");
 			$("#newKeywordTxt").val("");
 		}
+		else if(totalText.split(",").length >= 20) {
+			alert("最多只能订阅20个关键字")
+			$("#newKeywordTxt").val("");
+		}
 		else if(curWord != null && curWord != undefined && curWord.length > 0 && /^[a-zA-z0-9\u4E00-\u9FA5]*$/.test(curWord)) {
-			if(curWord.length < 2) {
-				alert("关键字的长度不能少于2")
+			if(curWord.length < 2 || curWord.length > 7) {
+				alert("关键字的长度应该在2~7")
 			} 
 			else {
 				$("#userkeywords").val(totalText + curWord + ",");
