@@ -67,7 +67,7 @@ public class MiscUtils {
 	}
 	
 	/**
-	 * 在目标列表之中是否存在类似的字符串 阈值：0.85
+	 * 在目标列表之中是否存在类似的字符串 阈值：0.75
 	 * @param newStr 新的一个字符串
 	 * @param targetList 目标字符串列表
 	 * @return 是否存在类似的字符串
@@ -78,7 +78,7 @@ public class MiscUtils {
 		JaroWinkler algorithm = new JaroWinkler();
 		if(targetList == null || targetList.size() == 0 ) return false;
 		for(String str : targetList) {
-			if(algorithm.getSimilarity(newStr, str) > 0.85) {
+			if(algorithm.getSimilarity(newStr, str) > 0.75) {
 				hasSimilarStr = true;
 				break;
 			}
