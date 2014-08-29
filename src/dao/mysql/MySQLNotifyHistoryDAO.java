@@ -58,7 +58,7 @@ public class MySQLNotifyHistoryDAO implements NotifyHistoryDAO {
 //					new String[]{"id", "lastNotifyTime", "titleList", "lastNotifyResult"}, 
 //					Lists.newArrayList(history).toArray());
 			return MySQLUtils.insert("insert into notify_hist(id, lastNotifyTime, titleList, descList, lastNotifyResult) "
-					+ "values(?,?,?,?)", 
+					+ "values(?,?,?,?,?)", 
 					history.getId(),
 					history.getLastNotifyTime(), 
 					new Gson().toJson(history.getTitleList()),
