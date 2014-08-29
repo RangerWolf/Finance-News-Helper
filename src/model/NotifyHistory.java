@@ -20,6 +20,11 @@ public class NotifyHistory {
 	List<String> titleList;
 
 	/**
+	 * 之前发送的新闻描述
+	 */
+	List<String> descList;
+	
+	/**
 	 * 上次通知的结果，成功 true 失败 false 
 	 */
 	Boolean lastNotifyResult;
@@ -54,6 +59,14 @@ public class NotifyHistory {
 
 	public void setTitleList(List<String> titleList) {
 		this.titleList = titleList;
+	}
+
+	public List<String> getDescList() {
+		return descList;
+	}
+
+	public void setDescList(List<String> descList) {
+		this.descList = descList;
 	}
 	
 	

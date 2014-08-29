@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50612
 File Encoding         : 65001
 
-Date: 2014-08-28 13:55:26
+Date: 2014-08-29 16:40:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -74,6 +74,7 @@ CREATE TABLE `notify_hist` (
   `id` varchar(255) NOT NULL,
   `lastNotifyTime` bigint(15) DEFAULT NULL,
   `titleList` text,
+  `descList` text,
   `lastNotifyResult` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

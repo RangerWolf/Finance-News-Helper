@@ -117,10 +117,13 @@ public class UserController extends JsonController {
 			
 			List<News> list = nDao.query(keywords);
 			List<String> rawNewsTitleList = Lists.newArrayList();
+			List<String> rawNewsDescList = Lists.newArrayList();
 			
 			for(News news: list) {
-				if(!MiscUtils.hasSimilarStr(news.getTitle(), rawNewsTitleList)) {
+				if( !MiscUtils.hasSimilarStr(news.getTitle(), rawNewsTitleList) &&
+					!MiscUtils.hasSimilarStr(news.getDescription(), rawNewsDescList)) {
 					rawNewsTitleList.add(news.getTitle());
+					rawNewsDescList.add(news.getDescription());
 					finalList.add(news);
 				}
 			}

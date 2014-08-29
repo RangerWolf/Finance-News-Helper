@@ -25,6 +25,8 @@ public abstract class Notifier {
 	protected User targetUser = null;
 	private NotifyHistory history = null;
 	protected List<String> sentTitleList = null;
+	protected List<String> sentDescList = null;
+	
 	
 	protected UserDAO userDao = new MySQLUserDAO();
 	protected NewsDAO newsDao = new MySQLNewsDAO();
@@ -41,13 +43,16 @@ public abstract class Notifier {
 		if(tmpHist != null) {
 			history = tmpHist;
 			sentTitleList = history.getTitleList();
+			sentDescList = history.getDescList();
 		}
 		else if(targetUser != null){
 			history = new NotifyHistory();
 			history.setId(userid);
 			history.setLastNotifyResult(false);
 			sentTitleList = Lists.newArrayList();
+			sentDescList = Lists.newArrayList();
 			history.setTitleList(sentTitleList);
+			history.setDescList(sentDescList);
 		}
 		history.setLastNotifyTime(new Date().getTime());
 	}
@@ -102,8 +107,11 @@ public abstract class Notifier {
 		List<News> filterdList = Lists.newArrayList();
 		for(News news : list) {
 			String title = news.getTitle();
-			if(!MiscUtils.hasSimilarStr(title, sentTitleList)) {
+			String desc = news.getDescription();
+			if( !MiscUtils.hasSimilarStr(title, sentTitleList) && 
+				!MiscUtils.hasSimilarStr(desc, sentDescList)) {
 				sentTitleList.add(title);
+				sentDescList.add(desc);
 				filterdList.add(news);
 			} 
 		}

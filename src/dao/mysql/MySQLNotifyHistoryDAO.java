@@ -37,6 +37,10 @@ public class MySQLNotifyHistoryDAO implements NotifyHistoryDAO {
 			List<String> titleList = new Gson().fromJson((String)map.get("titleList"), new TypeToken<List<String>>(){}.getType()); 
 			hist.setTitleList(titleList);
 		}
+		if(map.containsKey("descList")) {
+			List<String> descList = new Gson().fromJson((String)map.get("descList"), new TypeToken<List<String>>(){}.getType()); 
+			hist.setDescList(descList);
+		}
 		return hist;
 	}
 
@@ -53,22 +57,25 @@ public class MySQLNotifyHistoryDAO implements NotifyHistoryDAO {
 //					+ "values(?,?,?,?)",
 //					new String[]{"id", "lastNotifyTime", "titleList", "lastNotifyResult"}, 
 //					Lists.newArrayList(history).toArray());
-			return MySQLUtils.insert("insert into notify_hist(id, lastNotifyTime, titleList, lastNotifyResult) "
+			return MySQLUtils.insert("insert into notify_hist(id, lastNotifyTime, titleList, descList, lastNotifyResult) "
 					+ "values(?,?,?,?)", 
 					history.getId(),
 					history.getLastNotifyTime(), 
-					new Gson().toJson(history.getTitleList()), 
+					new Gson().toJson(history.getTitleList()),
+					new Gson().toJson(history.getDescList()), 
 					history.getLastNotifyResult());
 		} else {
 			return MySQLUtils.update("update notify_hist "
 					+ "set "
 					+ "lastNotifyTime = ?, "
 					+ "titleList = ?, "
+					+ "descList = ?, "
 					+ "lastNotifyResult = ? "
 					+ "where "
 					+ "id = ?", 
 					history.getLastNotifyTime(), 
-					new Gson().toJson(history.getTitleList()), 
+					new Gson().toJson(history.getTitleList()),
+					new Gson().toJson(history.getDescList()), 
 					history.getLastNotifyResult(), 
 					history.getId());
 		}
