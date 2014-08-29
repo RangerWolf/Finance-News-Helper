@@ -150,9 +150,10 @@
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			    <h3 class="panel-title" style="font-weight:bold">最新消息预览
+			    	
 			    	<span class="badge pull-right" 
 			    		style="color:black; background-color:rgba(0,0,0,0);font-weight:normal">
-			    		*根据您选中的关键词筛选出<label style="color:red">10小时以内</label>的新闻
+			    		*根据您选中的关键词筛选出<label style="color:red">24小时以内</label>的新闻
 			    	</span>
 			    </h3>
 			  </div>
@@ -161,12 +162,39 @@
 			  	 <p id="fetchingNewsTip" style="display: none">正在刷新...</p>
 			  </div>
 			  <div class="panel-footer">
-			  <button class="btn btn-success btn-sm" onclick="showLatestNews()">
-			  	<span class="glyphicon glyphicon-refresh"></span> 刷新
-			  </button>
-			  <button class="btn btn-success btn-sm" id="notifyBtn">
-			  	<span class="glyphicon glyphicon-send"></span>  向我的邮箱发送消息
-			  </button>	
+			  
+			  <div class="btn-toolbar" role="toolbar">
+				    <div class="btn-group" id="timespanBtnGroup">
+					  	<button id="w01hBtn" type="button" class="btn btn-info btn-sm">1小时以内</button>
+  						<button id="w10hBtn" type="button" class="btn btn-info btn-sm">1~10小时</button>
+  						<button id="w24hBtn" type="button" class="btn btn-info btn-sm">10~24小时</button>
+  						<button id="wAllBtn" type="button" class="btn btn-info btn-sm">全部</button>
+				  	</div>
+				  	<div class="btn-group">
+					  <button class="btn btn-success btn-sm" onclick="showLatestNews()">
+					  	<span class="glyphicon glyphicon-refresh"></span> 刷新
+					  </button>
+				    </div>
+				  	<div class="btn-group">
+				  		<button class="btn btn-success btn-sm" id="notifyBtn">
+					  	<span class="glyphicon glyphicon-send"></span>  向我的邮箱发送消息
+					  </button>
+				  	</div>
+				  	<div class="btn-group hidden">
+					  <button type="button" class="btn btn-danger btn-sm">Action</button>
+					  <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown">
+					    <span class="caret"></span>
+					    <span class="sr-only">Toggle Dropdown</span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu">
+					    <li><a href="#">Action</a></li>
+					    <li><a href="#">Another action</a></li>
+					    <li><a href="#">Something else here</a></li>
+					    <li class="divider"></li>
+					    <li><a href="#">Separated link</a></li>
+					  </ul>
+					</div>
+			  </div>	
 			  </div>
 			</div>
 		</div>
@@ -459,6 +487,7 @@
 			} else {
 				$.each(data, function(i, item) {
 					div = $("<div class='newsDiv'></div>");
+					div.attr("rawTime", item.dateTime)
 					// title
 					div.append("<span class='badge'  style='width:30px;margin-right:5px'>" + (i + 1) + "</span>");
 					title = $("<span><a href='" + item.newsUrl + "' target='_blank'>" + item.title + "</a></span>")
@@ -466,6 +495,7 @@
 					div.append("<span class='pull-right'>" + dateFormat(new Date(item.dateTime), 'yyyy-MM-dd hh:mm:ss') + "</span>")
 					$("#latestNewsHolder").append(div);
 				});
+				$("#wAllBtn").click()
 			}
 		})
 		.always(function(){
@@ -514,6 +544,53 @@
 		updateUserSetting()		
 		$("#" + id).remove();
 	}
+	
+	$("#timespanBtnGroup button").click(function(){
+		// step 1: 删除其他的button的active状态并将自己的状态设置为active
+		$("#timespanBtnGroup button").removeClass("active")
+		$(this).addClass("active")
+		
+		// step 2: 更新UI上面的新闻，将不在本时间段的新闻隐藏
+		// ---- 定义时间间隔
+		currentTime = new Date().getTime();
+		timeSpan = new Array()
+		w01h = currentTime - 3600 * 1000;
+		w10h = currentTime - 3600 * 1000 * 10;
+		w24h = currentTime - 3600 * 1000 * 24;
+		newsList = $(".newsDiv")
+		console.log($(this).attr("id"))
+		if($(this).attr("id") == "w01hBtn") {
+			timeSpan[0] = currentTime;
+			timeSpan[1] = w01h;
+		} else if ($(this).attr("id") == "w10hBtn") {
+			timeSpan[0] = w01h;
+			timeSpan[1] = w10h;
+		} else if($(this).attr("id") == "w24hBtn") {
+			timeSpan[0] = w10h;
+			timeSpan[1] = w24h;
+		} else {
+			timeSpan[0] = currentTime;
+			timeSpan[1] = 0;
+		}
+		
+		// ---- 根据时间间隔来控制是否显示
+		count = 0;
+		$("#noNewsTip").addClass("hidden")
+		for(var i = 0; i < newsList.length; i++) {
+			tmp = $(newsList[i])
+			if(tmp.attr("rawTime") < timeSpan[0] && tmp.attr("rawTime") > timeSpan[1]) {
+				tmp.show()
+				count += 1
+			} else {
+				tmp.hide()
+			}
+		}
+		if(count == 0) {
+			$("#noNewsTip").removeClass("hidden")
+		}
+		
+		
+	})
 	</script>
 </body>
 </html>

@@ -29,7 +29,7 @@ public class MySQLNewsDAO implements NewsDAO {
 	@Override
 	public List<News> query(String... keywords) {
 		Long now = new Date().getTime();
-		Long before = now - 3600L * 1000L * 10;
+		Long before = now - 3600L * 1000L * 24;
 
 		String orTemplate = " title like ? or description like ? ";
 		String sql = "select * "
