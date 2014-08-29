@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.jfinal.aop.Before;
 
 import crawler.Crawler;
+import crawler.impl.BaiduNewsCrawler;
 import crawler.impl.GoogNewsCrawler;
 import dao.KeywordDAO;
 import dao.NotifyHistoryDAO;
@@ -67,18 +68,31 @@ public class CrondController extends JsonController {
 	public void fetchNewsAndNotifyAllUsers() {
 		
 		// crawl news from google
-		Crawler bdCrawler = new GoogNewsCrawler();
-		List<String> keywordsList = bdCrawler.getKeywords();
+		Crawler googCrawler = new GoogNewsCrawler();
+		Crawler baiduCrawler = new BaiduNewsCrawler();
+		
+		List<String> keywordsList = googCrawler.getKeywords();
 		Map<String, Object> map = Maps.newHashMap();
 		for(String word : keywordsList) {
-			String url = bdCrawler.buildURL(word);
-			List<News> list = bdCrawler.parse(url);
+			// google
+			String url = googCrawler.buildURL(word);
+			List<News> list = googCrawler.parse(url);
 			if(list.size() > 0) {
-				map.put(word, bdCrawler.save(list));
+				map.put("Goog-" + word, googCrawler.save(list));
 			} else {
-				map.put(word, false);
+				map.put("Goog-" + word, false);
+			}
+			
+			// baidu
+			url = baiduCrawler.buildURL(word);
+			list = baiduCrawler.parse(url);
+			if(list.size() > 0) {
+				map.put("Baidu-" + word, googCrawler.save(list));
+			} else {
+				map.put("Baidu-" + word, false);
 			}
 		}
+		
 		
 		List<User> userList = uDao.queryAll();
 		for(User user : userList) {
