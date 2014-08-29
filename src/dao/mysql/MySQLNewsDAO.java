@@ -34,7 +34,8 @@ public class MySQLNewsDAO implements NewsDAO {
 		String orTemplate = " title like ? or description like ? ";
 		String sql = "select * "
 				+ "from (select * from news_record where dateTime > ? ) AS sb "
-				+ "where  " + orTemplate;
+				+ "where  " + orTemplate + " "
+				+ "order by dateTime desc";
 		
 		String[] queryParams = new String[keywords.length * 2];
 		queryParams[0] = "%" + keywords[0] + "%";
