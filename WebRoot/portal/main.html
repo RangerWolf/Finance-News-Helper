@@ -472,7 +472,8 @@
 	
 	
 	function showLatestNews() {
-		console.log("keyword=" + $("#userkeywords").val())
+		//console.log("keyword=" + $("#userkeywords").val())
+		keywords = $("#userkeywords").val().split(",")
 		$("#latestNewsHolder .newsDiv").remove();
 		$("#noNewsTip").addClass("hidden")
 	    $("#fetchingNewsTip").show()
@@ -488,8 +489,24 @@
 				$.each(data, function(i, item) {
 					div = $("<div class='newsDiv'></div>");
 					div.attr("rawTime", item.dateTime)
+					
+					// find keyword from desc
+					desc = item.description
+					tags = ""
+					kwCount = 0
+					for(var i = 0; i < keywords.length - 1; i++) {
+						tmpWord = keywords[i]
+						if( tmpWord.length > 0 && kwCount <= 3 && 
+							(desc.indexOf(tmpWord) != -1 || item.title.indexOf(tmpWord) != -1 )
+							) {
+							tags += "[" + keywords[i] + "]"
+							kwCount += 1
+						}
+					}
+					
 					// title
-					div.append("<span class='badge'  style='width:30px;margin-right:5px'>" + (i + 1) + "</span>");
+					div.append("<span class='label'  style=';margin-right:5px;color:rgb(240,173,78)'>" + tags + "</span>");
+
 					title = $("<span><a href='" + item.newsUrl + "' target='_blank'>" + item.title + "</a></span>")
 					div.append(title)
 					div.append("<span class='pull-right'>" + dateFormat(new Date(item.dateTime), 'yyyy-MM-dd hh:mm:ss') + "</span>")

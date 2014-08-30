@@ -34,8 +34,7 @@ public class MySQLNewsDAO implements NewsDAO {
 		String orTemplate = " title like ? or description like ? ";
 		String sql = "select * "
 				+ "from (select * from news_record where dateTime > ? ) AS sb "
-				+ "where  " + orTemplate + " "
-				+ "order by dateTime desc";
+				+ "where  " + orTemplate;
 		
 		String[] queryParams = new String[keywords.length * 2];
 		queryParams[0] = "%" + keywords[0] + "%";
@@ -46,8 +45,13 @@ public class MySQLNewsDAO implements NewsDAO {
 			queryParams[2*i] = "%" + keywords[i] + "%";
 			queryParams[2*i + 1] = "%" + keywords[i] + "%";
 		}
-
+		
+		sql += " order by dateTime desc";
+		
 		Object[] params = Lists.asList(before, queryParams).toArray();
+		System.err.println("!!!SQL=" + sql);
+		System.err.println("!!!Par=" + new Gson().toJson(params));
+		
 		return MySQLUtils.queryList(sql, News.class, params);
 	}
 
