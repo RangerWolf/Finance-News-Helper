@@ -10,10 +10,28 @@ Target Server Type    : MYSQL
 Target Server Version : 50612
 File Encoding         : 65001
 
-Date: 2014-08-29 16:40:56
+Date: 2014-08-30 13:50:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `block_pattern`
+-- ----------------------------
+DROP TABLE IF EXISTS `block_pattern`;
+CREATE TABLE `block_pattern` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `pattern` varchar(255) NOT NULL DEFAULT '',
+  `method` int(8) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2224 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of block_pattern
+-- ----------------------------
+INSERT INTO block_pattern VALUES ('1', 'http://*.tgbus.com/*', '0');
+INSERT INTO block_pattern VALUES ('2', 'http://www.ali213.net/*', '0');
+INSERT INTO block_pattern VALUES ('3', 'http://game.*/*', '0');
+
 -- ----------------------------
 -- Table structure for `keyword`
 -- ----------------------------
@@ -22,11 +40,8 @@ CREATE TABLE `keyword` (
   `word` varchar(10) DEFAULT NULL,
   `id` int(8) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of keyword
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for `mail_account`
@@ -45,7 +60,7 @@ CREATE TABLE `mail_account` (
 -- ----------------------------
 -- Records of mail_account
 -- ----------------------------
-INSERT INTO mail_account VALUES ('1', 'workemail2009@126.com', 'workemail2009@126.com', 'lplplplp', '0', '1');
+INSERT INTO mail_account VALUES ('1', 'workemail2009@126.com', 'workemail2009@126.com', '8uhb*UHB', '0', '1');
 
 -- ----------------------------
 -- Table structure for `news_record`
@@ -94,8 +109,5 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL DEFAULT '',
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of user
--- ----------------------------

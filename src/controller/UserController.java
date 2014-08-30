@@ -3,12 +3,14 @@ package controller;
 import java.util.List;
 import java.util.Map;
 
+import model.BlockPattern;
 import model.Keyword;
 import model.News;
 import model.RestfulResponse;
 import model.User;
 import notifier.EmailNotifier;
 import notifier.Notifier;
+import utils.BlockPatternVerifyUtils;
 import utils.Constants;
 import utils.MiscUtils;
 import validator.AdminActionValidator;
@@ -21,9 +23,11 @@ import com.jfinal.aop.Before;
 
 import crawler.Crawler;
 import crawler.impl.GoogNewsCrawler;
+import dao.BlockPatternDAO;
 import dao.KeywordDAO;
 import dao.NewsDAO;
 import dao.UserDAO;
+import dao.mysql.MySQLBlockPatternDAO;
 import dao.mysql.MySQLKeywordDAO;
 import dao.mysql.MySQLNewsDAO;
 import dao.mysql.MySQLUserDAO;
@@ -33,6 +37,7 @@ public class UserController extends JsonController {
 	private UserDAO uDao = new MySQLUserDAO();
 	private NewsDAO nDao = new MySQLNewsDAO();
 	private KeywordDAO kDao = new MySQLKeywordDAO();
+	private BlockPatternDAO bpDao = new MySQLBlockPatternDAO();
 	
 	public void index() {
 		keepPara();
@@ -109,9 +114,12 @@ public class UserController extends JsonController {
 		redirect("/user");
 	}
 	
+	
 	public void latestNews() {
 		User user = uDao.query(getSessionAttr(Constants.ATTR_LOGIN_EMAIL).toString());
 		List<News> finalList = Lists.newArrayList();
+		List<BlockPattern> blockPatternList = bpDao.query();
+		
 		if(user.getKeywords().trim().length() > 0) {
 			String[] keywords = user.getKeywords().split(",");
 			
@@ -121,7 +129,10 @@ public class UserController extends JsonController {
 			
 			for(News news: list) {
 				if( !MiscUtils.hasSimilarStr(news.getTitle(), rawNewsTitleList) &&
-					!MiscUtils.hasSimilarStr(news.getDescription(), rawNewsDescList)) {
+					!MiscUtils.hasSimilarStr(news.getDescription(), rawNewsDescList) &&
+					!BlockPatternVerifyUtils.verify(blockPatternList, news.getNewsUrl()) &&
+					!BlockPatternVerifyUtils.verify(blockPatternList, news.getTitle())
+				  ) {
 					rawNewsTitleList.add(news.getTitle());
 					rawNewsDescList.add(news.getDescription());
 					finalList.add(news);

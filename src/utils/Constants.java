@@ -22,5 +22,11 @@ public class Constants {
 	public static final String ATTR_USER_KEYWORD = "keyword";
 	
 	public static final int LABEL_SUCCESS = 1;
-	public static final int LABEL_FAILED = 0;	
+	public static final int LABEL_FAILED = 0;
+	
+	
+	public static final int PATTERN_SIMPLE_MATCH = 0;
+	public static final int PATTERN_REGEX = PATTERN_SIMPLE_MATCH + 1;
+	public static final int PATTERN_FULL_TEXT_SEARCH = PATTERN_SIMPLE_MATCH + 2;
+	
 }

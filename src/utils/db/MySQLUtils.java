@@ -15,6 +15,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -168,6 +169,17 @@ public class MySQLUtils {
 		return list;
 	}
 	
+	public static List<Map<String, Object>> queryList(String sql, Object... params) {
+		List<Map<String, Object>> list = null;
+		try {
+            QueryRunner qRunner = new QueryRunner(MySQLConnTools.getMySQLDataSource());
+            list = qRunner.query(sql, new MapListHandler(), params);
+		} catch (SQLException e) {
+//			logger.error(e.getMessage());
+			e.printStackTrace();
+		} 
+		return list;
+	}
 	
 	
 	public static void main(String[] args) {
