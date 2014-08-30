@@ -60,7 +60,8 @@ CREATE TABLE `mail_account` (
 -- ----------------------------
 -- Records of mail_account
 -- ----------------------------
-INSERT INTO mail_account VALUES ('1', 'workemail2009@126.com', 'workemail2009@126.com', '8uhb*UHB', '0', '1');
+INSERT INTO mail_account VALUES ('1', 'workemail2009@126.com', 'workemail2009@126.com', '8uhb*UHB', '0', '0');
+INSERT INTO mail_account VALUES ('2', 'improve.apk.rating01@gmail.com', 'improve.apk.rating01@gmail.com', 'service=mail', '0', '1');
 
 -- ----------------------------
 -- Table structure for `news_record`

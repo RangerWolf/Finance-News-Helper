@@ -2,10 +2,15 @@ package utils;
 
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -13,10 +18,12 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.apache.commons.lang.StringUtils;
-
 import model.MailAccount;
 import model.MailInfo;
+
+import org.apache.commons.lang.StringUtils;
+
+import dao.mysql.MySQLMailAccountDAO;
 public class EMailUtils {
 	private MimeMessage mimeMsg;
 	private Session session;
@@ -154,6 +161,62 @@ public class EMailUtils {
 		}
 	}
 
+	public static Boolean sendFromGMailTLS(final MailAccount account, final MailInfo info) {
+		if(!account.getMailAddr().endsWith("@gmail.com")) {
+			System.out.println("发邮件的类型不对！");
+			return false;
+		}
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props,
+				new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(account.getUsername(), account.getPassword());
+					}
+				});
+
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(account.getMailAddr()));
+			message.setRecipients(Message.RecipientType.TO, info.getTo());
+			message.setRecipients(Message.RecipientType.CC, info.getCc());
+			message.setRecipients(Message.RecipientType.BCC, info.getBcc());
+			message.setSubject(info.getSubject());
+			message.setContent(info.getBody(), "text/html");
+			
+			// 下面的代码可以被用来发送图片
+//			MimeMultipart multipart = new MimeMultipart("related");
+//	        BodyPart messageBodyPart = new MimeBodyPart();
+//	        String htmlText = "<img src=\"cid:image\">";
+//	        messageBodyPart.setContent(htmlText, "text/html");
+//	        multipart.addBodyPart(messageBodyPart);
+//            messageBodyPart = new MimeBodyPart();
+//            DataSource ds=new FileDataSource("Files/" + account.getMailAddr() +  ".png");
+//            messageBodyPart.setDataHandler(new DataHandler(ds));
+//            messageBodyPart.setHeader("Content-ID","<image>");
+//            multipart.addBodyPart(messageBodyPart);
+//            message.setContent(multipart);
+            
+            Transport.send(message);
+			
+			return true;
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			System.err.println("Error!");
+//			logger.error(e.getMessage());
+			if( e.getMessage().indexOf(Constants.EXCEED_QUOTA_ERROR_INFO) != -1) {
+//				logger.info("Set mail account[" + account.getMailAddr() + "] as not active.");
+//				MailAccountDAO.deActiveMailAccount(account);
+				new MySQLMailAccountDAO().deActiveMailAccount(account.getMailAddr());
+			}
+			return false;
+		}
+	}
+	
 	/*调用sendOut方法完成发送*/
 	private static boolean sendAndCc(String smtp, String from, String to, String copyto,
 		String subject, String content, String username, String password) {
@@ -185,52 +248,68 @@ public class EMailUtils {
 		if(info == null || account == null) return false;
 		String from = account.getMailAddr();
 		String smtp = null;
-		if(from.endsWith("@qq.com")) smtp = "smtp.qq.com";
-		else if(from.endsWith("@126.com")) smtp = "smtp.126.com";
-		else if(from.endsWith("@163.com")) smtp = "smtp.163.com";
-		else {
-//			System.err.println("不支持：" + from);
-			return false;
+		if(from.endsWith("@gmail.com")) {
+			return sendFromGMailTLS(account, info);
+		} else {
+			if(from.endsWith("@qq.com")) smtp = "smtp.qq.com";
+			else if(from.endsWith("@126.com")) smtp = "smtp.126.com";
+			else if(from.endsWith("@163.com")) smtp = "smtp.163.com";
+			else {
+				System.err.println("不支持：" + from);
+				return false;
+			}
+			
+			String username = from;
+			String password = account.getPassword();
+			String to = StringUtils.join(info.getTo(), ",");
+			String copyto = "";
+			
+			String subject = info.getSubject();
+			String content = info.getBody();
+			return sendAndCc(smtp, from, to, copyto, subject, content, username, password);
 		}
-		
-		String username = from;
-		String password = account.getPassword();
-		String to = StringUtils.join(info.getTo(), ",");
-		String copyto = "";
-		
-		String subject = info.getSubject();
-		String content = info.getBody();
-		return sendAndCc(smtp, from, to, copyto, subject, content, username, password);
 	}
 	
 	public static void main(String[] args) {
-//		String smtp = "smtp.126.com";// smtp服务器
-//		String from = "workemail2009@126.com";// 邮件显示名称
-//		String to = "yang.rangerwolf@gmail.com";// 收件人的邮件地址，必须是真实地址
+////		String smtp = "smtp.126.com";// smtp服务器
+////		String from = "workemail2009@126.com";// 邮件显示名称
+////		String to = "yang.rangerwolf@gmail.com";// 收件人的邮件地址，必须是真实地址
 		String copyto = "";// 抄送人邮件地址
 		String subject = "测试邮件";// 邮件标题
 		String content = "你好！";// 邮件内容
-//		String username = "workemail2009@126.com";// 发件人真实的账户名
-//		String password = "lplplplp";// 发件人密码
+////		String username = "workemail2009@126.com";// 发件人真实的账户名
+////		String password = "lplplplp";// 发件人密码
+//		
+////		String smtp = "smtp.163.com";
+////		String from = "wolf198688@163.com";
+////		String to = "yang.rangerwolf@gmail.com";
+////		String username = from;
+////		String password = "1qaz2wsx3edc";
+//		
+//		
+////		String smtp = "smtp.qq.com";
+////		String from = "526047326@qq.com";
+////		String to = "yang.rangerwolf@gmail.com";
+////		String username = from;
+////		String password = "1qaz@WSX";
 		
-//		String smtp = "smtp.163.com";
-//		String from = "wolf198688@163.com";
-//		String to = "yang.rangerwolf@gmail.com";
-//		String username = from;
-//		String password = "1qaz2wsx3edc";
+		String smtp = "smtp.gmail.com";
+		String to = "yang.rangerwolf@gmail.com";
+		String from = "improve.apk.rating01@gmail.com";
+		String username = from;
+		String password = "service=mail";
 		
 		
-//		String smtp = "smtp.qq.com";
-//		String from = "526047326@qq.com";
-//		String to = "yang.rangerwolf@gmail.com";
-//		String username = from;
-//		String password = "1qaz@WSX";
+		MailAccount account = new MailAccount();
+		account.setMailAddr(from);
+		account.setPassword(password);
+		account.setUsername(username);
 		
-//		String smtp = "smtp.gmail.com";
-//		String to = "yang.rangerwolf@gmail.com";
-//		String from = "improve.apk.rating01@gmail.com";
-//		String username = from;
-//		String password = "shuabang123";
+		MailInfo info = new MailInfo();
+		info.setTo(to);
+		info.setBody("test");
+		info.setSubject("test subject");
+//		EMailUtils.sendFromGMailTLS(account, info);
 		
 //		EMailUtils.sendAndCc(smtp, from, to, copyto, subject, content, username, password);
 	}
