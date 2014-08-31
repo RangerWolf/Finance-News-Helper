@@ -128,10 +128,10 @@ public class UserController extends JsonController {
 			List<String> rawNewsDescList = Lists.newArrayList();
 			
 			for(News news: list) {
-				if( !MiscUtils.hasSimilarStr(news.getTitle(), rawNewsTitleList) &&
-					!MiscUtils.hasSimilarStr(news.getDescription(), rawNewsDescList) &&
-					!BlockPatternVerifyUtils.verify(blockPatternList, news.getNewsUrl()) &&
-					!BlockPatternVerifyUtils.verify(blockPatternList, news.getTitle())
+				if( !BlockPatternVerifyUtils.verify(blockPatternList, news.getNewsUrl()) &&
+					!BlockPatternVerifyUtils.verify(blockPatternList, news.getTitle()) && 
+					!MiscUtils.hasSimilarStr(news.getTitle(), rawNewsTitleList) &&
+					!MiscUtils.hasSimilarStr(news.getDescription(), rawNewsDescList)
 				  ) {
 					rawNewsTitleList.add(news.getTitle());
 					rawNewsDescList.add(news.getDescription());

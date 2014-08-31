@@ -3,17 +3,21 @@ package notifier;
 import java.util.Date;
 import java.util.List;
 
+import model.BlockPattern;
 import model.News;
 import model.NotifyHistory;
 import model.User;
+import utils.BlockPatternVerifyUtils;
 import utils.MiscUtils;
 
 import com.google.common.collect.Lists;
 
+import dao.BlockPatternDAO;
 import dao.MailAccountDAO;
 import dao.NewsDAO;
 import dao.NotifyHistoryDAO;
 import dao.UserDAO;
+import dao.mysql.MySQLBlockPatternDAO;
 import dao.mysql.MySQLMailAccountDAO;
 import dao.mysql.MySQLNewsDAO;
 import dao.mysql.MySQLNotifyHistoryDAO;
@@ -32,6 +36,7 @@ public abstract class Notifier {
 	protected NewsDAO newsDao = new MySQLNewsDAO();
 	protected MailAccountDAO maDao = new MySQLMailAccountDAO();
 	protected NotifyHistoryDAO nhDao = new MySQLNotifyHistoryDAO();
+	protected BlockPatternDAO bpDao = new MySQLBlockPatternDAO();
 	
 	public Notifier(String userid) {
 		// init targetUser
@@ -105,10 +110,13 @@ public abstract class Notifier {
 	 */
 	protected List<News> mergeAndFilterNews(List<News> list) {
 		List<News> filterdList = Lists.newArrayList();
+		List<BlockPattern> blockPatternList = bpDao.query();
 		for(News news : list) {
 			String title = news.getTitle();
 			String desc = news.getDescription();
-			if( !MiscUtils.hasSimilarStr(title, sentTitleList) && 
+			if( !BlockPatternVerifyUtils.verify(blockPatternList, news.getNewsUrl()) &&
+				!BlockPatternVerifyUtils.verify(blockPatternList, title) &&
+				!MiscUtils.hasSimilarStr(title, sentTitleList) && 
 				!MiscUtils.hasSimilarStr(desc, sentDescList)) {
 				sentTitleList.add(title);
 				sentDescList.add(desc);
