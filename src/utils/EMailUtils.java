@@ -2,9 +2,6 @@ package utils;
 
 import java.util.Properties;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -186,8 +183,7 @@ public class EMailUtils {
 			message.setRecipients(Message.RecipientType.CC, info.getCc());
 			message.setRecipients(Message.RecipientType.BCC, info.getBcc());
 			message.setSubject(info.getSubject());
-			message.setContent(info.getBody(), "text/html");
-			
+			message.setContent(info.getBody(), "text/html; charset=UTF-8");
 			// 下面的代码可以被用来发送图片
 //			MimeMultipart multipart = new MimeMultipart("related");
 //	        BodyPart messageBodyPart = new MimeBodyPart();
@@ -213,8 +209,8 @@ public class EMailUtils {
 //				MailAccountDAO.deActiveMailAccount(account);
 				new MySQLMailAccountDAO().deActiveMailAccount(account.getMailAddr());
 			}
-			return false;
 		}
+		return false;
 	}
 	
 	/*调用sendOut方法完成发送*/
