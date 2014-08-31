@@ -3,12 +3,8 @@ package utils.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import model.News;
-import model.NotifyHistory;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -16,17 +12,10 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 
-import dao.NotifyHistoryDAO;
 import dao.mysql.MySQLMailAccountDAO;
-import dao.mysql.MySQLNewsDAO;
-import dao.mysql.MySQLNotifyHistoryDAO;
 
 public class MySQLUtils {
 	

@@ -2,11 +2,12 @@ package dao.mysql;
 
 import java.util.List;
 
+import main.Constants;
+import model.Keyword;
+import utils.db.MySQLUtils;
+
 import com.google.common.collect.Lists;
 
-import utils.Constants;
-import utils.db.MySQLUtils;
-import model.Keyword;
 import dao.KeywordDAO;
 
 public class MySQLKeywordDAO implements KeywordDAO{

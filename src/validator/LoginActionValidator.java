@@ -1,10 +1,9 @@
 package validator;
 
+import main.Constants;
 import model.User;
 
 import org.apache.commons.lang.StringUtils;
-
-import utils.Constants;
 
 import com.jfinal.core.Controller;
 import com.jfinal.validate.Validator;

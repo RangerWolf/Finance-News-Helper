@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 import java.util.Map;
 
+import main.Constants;
 import model.BlockPattern;
 import model.Keyword;
 import model.News;
@@ -11,7 +12,6 @@ import model.User;
 import notifier.EmailNotifier;
 import notifier.Notifier;
 import utils.BlockPatternVerifyUtils;
-import utils.Constants;
 import utils.MiscUtils;
 import validator.AdminActionValidator;
 import validator.LoginStatusValidator;

@@ -4,21 +4,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import notifier.EmailNotifier;
-import notifier.Notifier;
-
-import org.apache.commons.lang.StringUtils;
-
-import validator.AdminActionValidator;
 import model.Keyword;
 import model.News;
 import model.NotifyHistory;
 import model.User;
+import notifier.EmailNotifier;
+import notifier.Notifier;
+import validator.AdminActionValidator;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.gson.Gson;
 import com.jfinal.aop.Before;
 
 import crawler.Crawler;

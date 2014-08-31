@@ -2,9 +2,8 @@ package dao.mysql;
 
 import java.util.List;
 
-import utils.Constants;
-import utils.db.MySQLUtils;
 import model.MailAccount;
+import utils.db.MySQLUtils;
 import dao.MailAccountDAO;
 
 public class MySQLMailAccountDAO implements MailAccountDAO {

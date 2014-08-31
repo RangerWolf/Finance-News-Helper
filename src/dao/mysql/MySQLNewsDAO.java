@@ -3,14 +3,13 @@ package dao.mysql;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import main.Constants;
+import model.News;
+import utils.db.MySQLUtils;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 
-import utils.Constants;
-import utils.db.MySQLUtils;
-import model.News;
 import dao.NewsDAO;
 
 public class MySQLNewsDAO implements NewsDAO {

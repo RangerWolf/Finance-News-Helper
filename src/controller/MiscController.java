@@ -4,11 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import model.News;
 
 import org.jsoup.Jsoup;
 
@@ -16,26 +13,10 @@ import validator.AdminActionValidator;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
 import com.jfinal.aop.Before;
-
-import crawler.Crawler;
-import crawler.impl.BaiduNewsCrawler;
-import dao.KeywordDAO;
-import dao.MailAccountDAO;
-import dao.NewsDAO;
-import dao.UserDAO;
-import dao.mysql.MySQLKeywordDAO;
-import dao.mysql.MySQLMailAccountDAO;
-import dao.mysql.MySQLNewsDAO;
-import dao.mysql.MySQLUserDAO;
 
 public class MiscController extends JsonController{
 
-	private KeywordDAO kDao = new MySQLKeywordDAO();
-	private UserDAO uDao = new MySQLUserDAO();
-	private MailAccountDAO maDAO = new MySQLMailAccountDAO();
-	
 	@Before(AdminActionValidator.class)
 	public void clear() {
 		renderText("OK");

@@ -1,7 +1,7 @@
 package validator;
 
+import main.Constants;
 import model.RestfulResponse;
-import utils.Constants;
 
 import com.google.gson.Gson;
 import com.jfinal.core.Controller;

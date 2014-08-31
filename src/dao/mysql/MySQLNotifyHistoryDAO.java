@@ -3,11 +3,11 @@ package dao.mysql;
 import java.util.List;
 import java.util.Map;
 
+import main.Constants;
 import model.NotifyHistory;
 
 import org.apache.commons.lang.StringUtils;
 
-import utils.Constants;
 import utils.db.MySQLUtils;
 
 import com.google.gson.Gson;

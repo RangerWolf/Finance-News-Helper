@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
+import main.Constants;
 import model.News;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,7 +14,6 @@ import org.horrabin.horrorss.RssItemBean;
 import org.horrabin.horrorss.RssParser;
 import org.jsoup.Jsoup;
 
-import utils.Constants;
 import utils.MiscUtils;
 import utils.USDateParser;
 

@@ -1,11 +1,11 @@
 package controller;
 
+import main.Constants;
+
 import org.apache.commons.lang.StringUtils;
 
-import utils.Constants;
 import utils.MiscUtils;
 import validator.LoginStatusValidator;
-import validator.StockAPIValidator;
 
 import com.jfinal.aop.Before;
 

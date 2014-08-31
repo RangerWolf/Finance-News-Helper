@@ -6,13 +6,13 @@ import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 
+import main.Constants;
 import model.News;
 
 import org.horrabin.horrorss.RssFeed;
 import org.horrabin.horrorss.RssItemBean;
 import org.horrabin.horrorss.RssParser;
 
-import utils.Constants;
 import utils.MiscUtils;
 import utils.USDateParser;
 

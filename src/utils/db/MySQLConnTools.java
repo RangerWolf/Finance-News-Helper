@@ -1,17 +1,11 @@
 package utils.db;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import javax.sql.DataSource;
 
 import utils.MiscUtils;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /** 

@@ -1,6 +1,6 @@
 package validator;
 
-import utils.Constants;
+import main.Constants;
 
 import com.jfinal.core.Controller;
 import com.jfinal.validate.Validator;

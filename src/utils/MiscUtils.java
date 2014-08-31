@@ -3,22 +3,18 @@ package utils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.net.SocketAddress;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import main.Constants;
+
 import org.jsoup.Jsoup;
 
-import com.google.common.collect.Lists;
-import com.google.gson.Gson;
-
 import uk.ac.shef.wit.simmetrics.similaritymetrics.JaroWinkler;
+
+import com.google.common.collect.Lists;
 
 public class MiscUtils {
 

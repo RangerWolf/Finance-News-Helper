@@ -1,8 +1,5 @@
 package dao;
 
-import java.util.List;
-
-import model.News;
 import model.NotifyHistory;
 
 public interface NotifyHistoryDAO {

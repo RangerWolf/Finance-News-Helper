@@ -2,8 +2,8 @@ package controller;
 
 import java.util.List;
 
+import main.Constants;
 import model.User;
-import utils.Constants;
 import validator.AdminActionValidator;
 import validator.LoginActionValidator;
 import validator.LoginStatusValidator;

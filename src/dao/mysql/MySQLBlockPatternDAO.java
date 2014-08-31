@@ -7,7 +7,6 @@ import model.BlockPattern;
 import utils.db.MySQLUtils;
 
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
 
 import dao.BlockPatternDAO;
 
