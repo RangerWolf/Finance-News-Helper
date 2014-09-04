@@ -272,18 +272,18 @@
 				if (localData.length == 0) {
 					alert("没有找到任何股票");
 				} else if (localData.length == 1) {
+					console.log(JSON.stringify(localData))
 					var originalStockStr = $("#userstocks").val(); 
 					var originalKeywordStr = $("#userkeywords").val();
 					
-					var symbol = data[0].symbol;
-					var type = data[0].type;
-					var name = data[0].name;
+					var symbol = localData[0].symbol;
+					var type = localData[0].type;
+					var name = localData[0].name;
 					if(type != "SH" && type != "SZ") {
 						alert("暂时只支持上证与深证券!")
 					} else {
 						// build stockCode
 						var stockCode = type + "_" + symbol; // 比如 US_GOOG
-						console.log("~~~" + stockCode)
 						if(type=="SH") stockCode = "0" + symbol;
 						else if(type == "SZ") stockCode = "1" + symbol;
 						if(originalStockStr.indexOf(stockCode) == -1 ) {
@@ -300,12 +300,12 @@
 					// 在chooseStockTable之中添加表格						
 					chooseStockTable = $("#chooseStockTable")
 					$(".stockChooseList").remove();
-					for(var i = 0; i < data.length; i++) {
+					for(var i = 0; i < localData.length; i++) {
 						row = $("<tr class='stockChooseList'></tr>")
 						row.append("<td>" + (i+1) + "</td>")
-						row.append("<td>" + data[i].symbol + "</td>")
-						row.append("<td>" + data[i].name + "</td>")
-						row.append('<td><button type="button" class="btn btn-primary btn-xs choose-stock-btn" id="' + data[i].symbol + '">关注此股</button></td>')
+						row.append("<td>" + localData[i].symbol + "</td>")
+						row.append("<td>" + localData[i].name + "</td>")
+						row.append('<td><button type="button" class="btn btn-primary btn-xs choose-stock-btn" id="' + localData[i].symbol + '">关注此股</button></td>')
 						chooseStockTable.append(row)
 					}
 					
